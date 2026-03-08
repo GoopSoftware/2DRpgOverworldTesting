@@ -1,0 +1,23 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "colored_tilemap.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 8
+        }
+    },
+    "last.imagePath": "C:/Users/Jake/source/repos/2DRpgOverworldTesting/2DRpgOverworldTesting/Tiles",
+    "openFiles": [
+    ],
+    "project": "Tiles.tiled-project",
+    "recentFiles": [
+        "colored_tilemap.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    }
+}
