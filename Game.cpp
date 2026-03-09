@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "InputHandler.h"
+#include <iostream>
 
 
 
@@ -14,15 +16,34 @@ void Game::gameStartup() {
 			world[i][j] = sTile
 			{
 				i, 
-				j 
+				j,
+				GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_STONE)
+			};
+
+			dungeon[i][j] = sTile
+			{
+				i,
+				j,
+				TILE_TYPE_DIRT
 			};
 		}
 	}
 
-	player.x = TILE_WIDTH * 3;
-	player.y = TILE_HEIGHT* 3;
+	// initialized locations
+	player->i_ = TILE_WIDTH * 12;
+	player->j_ = TILE_HEIGHT * 12;
+	player->zone = ZONE_WORLD;
 
-	camera.target = Vector2{ static_cast<float>(player.x), static_cast<float>(player.y) };
+	dungeonGate->i_ = TILE_WIDTH * 10;
+	dungeonGate->j_ = TILE_HEIGHT * 10;
+	dungeonGate->zone = ZONE_ALL;
+
+	orc->i_ = TILE_WIDTH * 5;
+	orc->j_ = TILE_HEIGHT * 5;
+	orc->zone = ZONE_DUNGEON;
+
+	// Make camera follow player
+	camera.target = Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) };
 	camera.offset = Vector2{ static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() / 2) };
 	camera.rotation = 0.f;
 	camera.zoom = 3.f;
@@ -31,13 +52,18 @@ void Game::gameStartup() {
 
 void Game::gameUpdate() {
 
-	float x = player.x;
-	float y = player.y;
+	Entity* interactTarget = nullptr;
 
-	if (IsKeyPressed(KEY_LEFT)) x -= 1 * TILE_WIDTH;
-	if (IsKeyPressed(KEY_RIGHT)) x += 1 * TILE_WIDTH;
-	if (IsKeyPressed(KEY_UP)) y -= 1 * TILE_WIDTH;
-	if (IsKeyPressed(KEY_DOWN)) y += 1 * TILE_WIDTH;
+	if (player->i_ == dungeonGate->i_ && player->j_ == dungeonGate->j_) {
+		interactTarget = dungeonGate;
+	}
+
+	Command* command = InputHandler::handleInput(player, interactTarget);
+
+	if (command) {
+		command->execute();
+		delete command;
+	}
 
 	float wheel = GetMouseWheelMove();
 
@@ -48,10 +74,18 @@ void Game::gameUpdate() {
 		if (camera.zoom > 8.f) camera.zoom = 8.f;
 	}
 
-	player.x = x;
-	player.y = y;
+	camera.target = (Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) });
 
-	camera.target = (Vector2{ static_cast<float>(player.x), static_cast<float>(player.y) });
+	/*if (IsKeyPressed(KEY_ENTER)) {
+		if (player->i_ == dungeonGate->i_ && player->j_ == dungeonGate.j_) {
+			if (player->zone == ZONE_WORLD) {
+				player->zone = ZONE_DUNGEON;
+			}
+			else if (player->zone == ZONE_DUNGEON) {
+				player->zone = ZONE_WORLD;
+			}
+		}
+	}*/
 }
 
 void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y) {
@@ -78,26 +112,55 @@ void Game::gameRender() {
 	int texture_index_y = 0;
 	for (int i = 0; i < WORLD_WIDTH; i++) {
 		for (int j = 0; j < WORLD_HEIGHT; j++) {
-			tile = world[i][j];
+			
+			if (player->zone == ZONE_WORLD) {
+				tile = world[i][j];
+			}
+			else if (player->zone == ZONE_DUNGEON) {
+				tile = dungeon[i][j];
+			}
 
-			texture_index_x = 4;
-			texture_index_y = 4;
+			switch (tile.type) {
+			case TILE_TYPE_DIRT:
+				texture_index_x = 1;
+				texture_index_y = 1;
+				break;
+			case TILE_TYPE_GRASS:
+				texture_index_x = 5;
+				texture_index_y = 4;
+				break;
+			case TILE_TYPE_TREE:
+				texture_index_x = 5;
+				texture_index_y = 5;
+				break;
+			case TILE_TYPE_STONE:
+				texture_index_x = 4;
+				texture_index_y = 4;
+				break;
+			}
 
 			drawTile(tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y);
 
 		}
 	}
 
-	drawTile(camera.target.x, camera.target.y, 4, 0);
+	// Render dungeon gate
+	drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
 
+	if (orc->zone == player->zone) {
+		drawTile(orc->i_, orc->j_, 11, 0);
+	}
+	
+	// Render Player
+	drawTile(player->i_, player->j_, 4, 0);
 
 
 	EndMode2D();
 
 	DrawRectangle(5, 5, 330, 120, Fade(SKYBLUE, 0.5f));
 	DrawRectangleLines(5, 5, 330, 120, BLUE);
-	DrawText(TextFormat("Camera Target: (%06.2f, %06.2f)", camera.target.x, camera.target.y), 15, 10, 14, YELLOW);
-	DrawText(TextFormat("Camera Zoom: %06.2f", camera.zoom), 15, 30, 14, YELLOW);
+	DrawText(TextFormat("Camera Target: (%06.2f, %06.2f)", camera.target.x, camera.target.y), 15, 10, 19, YELLOW);
+	DrawText(TextFormat("Camera Zoom: %06.2f", camera.zoom), 15, 30, 19, YELLOW);
 
 }
 
@@ -108,5 +171,10 @@ void Game::gameShutdown() {
 	for (int i = 0; i < MAX_TEXTURES; i++) {
 		UnloadTexture(textures[i]);
 	}
+
+	delete dungeonGate;
+	dungeonGate = nullptr;
+	delete player;
+	player = nullptr;
 
 }
