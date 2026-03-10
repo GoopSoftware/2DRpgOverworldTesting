@@ -194,8 +194,7 @@ void Game::gameShutdown() {
 		UnloadTexture(textures[i]);
 	}
 
-	delete interactTarget;
-	interactTarget = nullptr;
+
 	delete dungeonGate;
 	dungeonGate = nullptr;
 	delete player;
