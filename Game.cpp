@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "InputHandler.h"
 #include <iostream>
-
+#include <string>
 
 
 void Game::gameStartup() {
@@ -30,17 +30,10 @@ void Game::gameStartup() {
 	}
 
 	// initialized locations
-	player->i_ = TILE_WIDTH * 12;
-	player->j_ = TILE_HEIGHT * 12;
-	player->zone = ZONE_WORLD;
+	player->initialize(4, 4, ZONE_WORLD);
+	dungeonGate->initialize(10, 10, ZONE_ALL);
+	orc->initialize(5, 5, ZONE_DUNGEON);
 
-	dungeonGate->i_ = TILE_WIDTH * 10;
-	dungeonGate->j_ = TILE_HEIGHT * 10;
-	dungeonGate->zone = ZONE_ALL;
-
-	orc->i_ = TILE_WIDTH * 5;
-	orc->j_ = TILE_HEIGHT * 5;
-	orc->zone = ZONE_DUNGEON;
 
 	// Make camera follow player
 	camera.target = Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) };
@@ -52,9 +45,17 @@ void Game::gameStartup() {
 
 void Game::gameUpdate() {
 
-	Entity* interactTarget = nullptr;
+	interactTarget = nullptr;
 
-	if (player->i_ == dungeonGate->i_ && player->j_ == dungeonGate->j_) {
+	int oi = abs(player->i_ - orc->i_);
+	int oj = abs(player->j_ - orc->j_);
+	if (oi + oj <= TILE_WIDTH && player->zone_ == ZONE_DUNGEON && orc->isAlive_) {
+		interactTarget = orc;
+	}
+
+	int di = abs(player->i_ - dungeonGate->i_);
+	int dj = abs(player->j_ - dungeonGate->j_);
+	if (di + dj <= TILE_WIDTH) {
 		interactTarget = dungeonGate;
 	}
 
@@ -64,6 +65,23 @@ void Game::gameUpdate() {
 		command->execute();
 		delete command;
 	}
+
+	if (interactTarget == orc) {
+		if (IsKeyPressed(KEY_SPACE)) {
+			
+			orc->health_ -= player->attack();
+			std::cout << orc->health_ << std::endl;
+
+			if (!combatTextTimer.isActive) {
+				combatTextTimer.isActive = true;
+				startTimer(&combatTextTimer, .50f);
+			}
+		}
+	}
+	if (orc->health_ <= 0) {
+		orc->isAlive_ = false;
+	}
+
 
 	float wheel = GetMouseWheelMove();
 
@@ -76,16 +94,11 @@ void Game::gameUpdate() {
 
 	camera.target = (Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) });
 
-	/*if (IsKeyPressed(KEY_ENTER)) {
-		if (player->i_ == dungeonGate->i_ && player->j_ == dungeonGate.j_) {
-			if (player->zone == ZONE_WORLD) {
-				player->zone = ZONE_DUNGEON;
-			}
-			else if (player->zone == ZONE_DUNGEON) {
-				player->zone = ZONE_WORLD;
-			}
-		}
-	}*/
+	if (isTimerDone(combatTextTimer)) {
+		combatTextTimer.isActive = false;
+	}
+
+	
 }
 
 void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y) {
@@ -113,10 +126,10 @@ void Game::gameRender() {
 	for (int i = 0; i < WORLD_WIDTH; i++) {
 		for (int j = 0; j < WORLD_HEIGHT; j++) {
 			
-			if (player->zone == ZONE_WORLD) {
+			if (player->zone_ == ZONE_WORLD) {
 				tile = world[i][j];
 			}
-			else if (player->zone == ZONE_DUNGEON) {
+			else if (player->zone_ == ZONE_DUNGEON) {
 				tile = dungeon[i][j];
 			}
 
@@ -147,8 +160,11 @@ void Game::gameRender() {
 	// Render dungeon gate
 	drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
 
-	if (orc->zone == player->zone) {
+	if (orc->zone_ == player->zone_ && orc->isAlive_) {
 		drawTile(orc->i_, orc->j_, 11, 0);
+	}
+	if (combatTextTimer.isActive) {
+		DrawText(TextFormat("%d", player->damage_), orc->i_, orc->j_ - 10, 9, YELLOW);
 	}
 	
 	// Render Player
@@ -159,8 +175,14 @@ void Game::gameRender() {
 
 	DrawRectangle(5, 5, 330, 120, Fade(SKYBLUE, 0.5f));
 	DrawRectangleLines(5, 5, 330, 120, BLUE);
-	DrawText(TextFormat("Camera Target: (%06.2f, %06.2f)", camera.target.x, camera.target.y), 15, 10, 19, YELLOW);
+	DrawText(TextFormat("Camera Target: (%6.2f, %6.2f)", (camera.target.x / TILE_WIDTH), (camera.target.y / TILE_WIDTH)), 15, 10, 19, YELLOW);
 	DrawText(TextFormat("Camera Zoom: %06.2f", camera.zoom), 15, 30, 19, YELLOW);
+	if (interactTarget != nullptr) {
+		DrawText(TextFormat("Interact Target: %s", interactTarget->debugName_), 15, 50, 19, YELLOW);
+	}
+	else {
+		DrawText("Interact Target: ", 15, 50, 19, YELLOW);
+	}
 
 }
 
@@ -172,9 +194,27 @@ void Game::gameShutdown() {
 		UnloadTexture(textures[i]);
 	}
 
+	delete interactTarget;
+	interactTarget = nullptr;
 	delete dungeonGate;
 	dungeonGate = nullptr;
 	delete player;
 	player = nullptr;
+	delete orc;
+	orc = nullptr;
 
+}
+
+
+void Game::startTimer(Timer* timer, double lifetime) {
+	timer->startTime = GetTime();
+	timer->lifeTime = lifetime;
+}
+
+bool Game::isTimerDone(Timer timer) {
+	return GetTime() - timer.startTime >= timer.lifeTime;
+}
+
+double Game::getElapsed(Timer timer) {
+	return GetTime() - timer.startTime;
 }

@@ -22,6 +22,12 @@ struct sTile {
 	int type;
 };
 
+struct Timer {
+	double startTime;
+	double lifeTime;
+	bool isActive;
+};
+
 
 class Game
 {
@@ -34,7 +40,13 @@ public:
 	void drawTile(int x, int y, int tileX, int tileY);
 	void gameShutdown();
 
+	void startTimer(Timer* timer, double lifetime);
+	bool isTimerDone(Timer timer);
+	double getElapsed(Timer timer);
+
 private:
+
+	Entity* interactTarget;
 
 	Player* player = new Player();
 	Enemy* orc = new Enemy();
@@ -54,6 +66,8 @@ private:
 	sTile dungeon[WORLD_WIDTH][WORLD_HEIGHT];
 
 	Camera2D camera = { 0 };
+
+	Timer combatTextTimer;
 
 };
 

@@ -5,17 +5,17 @@
 
 
 
-class EnterCommand : public Command
+class InteractCommand : public Command
 {
 
 public:
 
-	EnterCommand(Entity* controlEntity, Entity* interactEntity)
+	InteractCommand(Entity* controlEntity, Entity* interactEntity)
 		: controlEntity_(controlEntity),
-		  interactEntity_(interactEntity)
-		{}
+		interactEntity_(interactEntity)
+	{}
 
-	virtual void execute() override { 
+	virtual void execute() override {
 		if (interactEntity_) {
 			interactEntity_->interact(controlEntity_);
 		}
@@ -26,7 +26,7 @@ private:
 
 	Entity* controlEntity_;
 	Entity* interactEntity_;
-	
+
 
 };
 
