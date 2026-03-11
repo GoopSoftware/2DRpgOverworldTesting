@@ -13,8 +13,19 @@ class Entity
 {
 
 public:
-
-	virtual void interact(Entity* actor) {}
+	Entity() {};
+	Entity(int i, int j, Zone zone) :
+		i_(i),
+		j_(j),
+		zone_(zone)
+	{
+		initialize(i, j, zone);
+	}
+	void initialize(int i, int j, Zone zone) {
+		i_ = TILE_SIZE * i;
+		j_ = TILE_SIZE * j;
+		zone_ = zone;
+	}
 
 	int i_;
 	int j_;
@@ -22,15 +33,12 @@ public:
 
 	const char* debugName_ = "Entity";
 
-	void moveTo(int x, int y) {};
-	void initialize(int i, int j, Zone zone) {
-		i_ = TILE_SIZE * i;
-		j_ = TILE_SIZE * j;
-		zone_ = zone;
-	}
+	virtual void interact(Entity* actor) {}
+
 
 	int damage_ = 0;
 	bool isAlive_ = true;
+
 	int attack() {
 		damage_ = GetRandomValue(10, 30);
 		return damage_;
@@ -42,4 +50,3 @@ private:
 
 
 };
-

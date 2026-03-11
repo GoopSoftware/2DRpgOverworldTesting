@@ -36,12 +36,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>src\entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>src\entities</Filter>
-    </ClCompile>
+    <ClCompile Include="InputHandler.h.cpp" />
+    <ClCompile Include="LevelGenerator.cpp" />
+    <ClCompile Include="LevelRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -51,6 +48,19 @@
       <Filter>src\entities</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
+      <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="DungeonDoor.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="InteractCommand.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelGenerator.h" />
+    <ClInclude Include="LevelRenderer.h" />
+    <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="Spawner.h" />
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Enemy.h">
       <Filter>src\entities</Filter>
     </ClInclude>
   </ItemGroup>

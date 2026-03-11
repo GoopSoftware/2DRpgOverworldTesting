@@ -37,7 +37,7 @@ private:
 
 	Entity* interactTarget;
 
-	Player* player = new Player();
+	Player* player = new Player(4, 4, ZONE_WORLD);
 	Enemy* orc = new Enemy();
 	DungeonDoor* dungeonGate = new DungeonDoor();
 

@@ -7,7 +7,7 @@ void LevelGenerator::generateWorld(Level& level) {
             level.tiles[i][j] = Tile{
                 i,
                 j,
-                static_cast<TileType>(GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_STONE))
+                static_cast<TileType>(GetRandomValue(TILE_TYPE_GRASS, TILE_TYPE_STONE))
             };
         }
     }
@@ -19,7 +19,7 @@ void LevelGenerator::generateDungeon(Level& level) {
             level.tiles[i][j] = Tile{
                 i,
                 j,
-                TILE_TYPE_DIRT
+                static_cast<TileType>(GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_STONE))
             };
         }
     }

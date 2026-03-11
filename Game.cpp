@@ -10,14 +10,18 @@ void Game::gameStartup() {
 	textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
 	UnloadImage(image);
 
+
+	// the key to generating a world
+	// LevelGenerator.h holds the algorithm to set tiles of the level
+	// level.h holds the data of the level
+	// LevelRenderer.h shows the tiles on screen
+	// This logic will eventually turn into a method
 	levelGenerator->generateWorld(worldLevel);
 	levelGenerator->generateDungeon(dungeonLevel);
-
 	currentLevel = &worldLevel;
 	levelRenderer = new LevelRenderer(textures);
-
-	// initialized locations
-	player->initialize(4, 4, ZONE_WORLD);
+	// initialized locations of player and interactables
+	//player->initialize(4, 4, ZONE_WORLD);
 	dungeonGate->initialize(10, 10, ZONE_ALL);
 	orc->initialize(5, 5, ZONE_DUNGEON);
 
@@ -32,18 +36,15 @@ void Game::gameStartup() {
 
 void Game::gameUpdate() {
 
+	// If player is + or -  allow interaction
+	// interact target gets reset to nullptr every frame if there is no interaction target
+	// Create an entity called interactTarget
 	interactTarget = nullptr;
-
 	int oi = abs(player->i_ - orc->i_);
 	int oj = abs(player->j_ - orc->j_);
 	if (oi + oj <= TILE_WIDTH && player->zone_ == ZONE_DUNGEON && orc->isAlive_) {
 		interactTarget = orc;
 	}
-
-	if (IsKeyDown(KEY_G)) {
-		char* leak = new char[1000000]; // 1 MB every frame
-	}
-
 	int di = abs(player->i_ - dungeonGate->i_);
 	int dj = abs(player->j_ - dungeonGate->j_);
 	if (di + dj <= TILE_WIDTH) {
