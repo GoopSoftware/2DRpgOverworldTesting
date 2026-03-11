@@ -133,6 +133,8 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputHandler.h.cpp" />
+    <ClCompile Include="LevelGenerator.cpp" />
+    <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +145,9 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InteractCommand.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelGenerator.h" />
+    <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Weapon.h" />

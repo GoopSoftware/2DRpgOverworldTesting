@@ -3,7 +3,6 @@
 #include <iostream>
 #include <string>
 
-
 void Game::gameStartup() {
 	InitAudioDevice();
 
@@ -11,23 +10,11 @@ void Game::gameStartup() {
 	textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
 	UnloadImage(image);
 
-	for (int i = 0; i < WORLD_WIDTH; i++) {
-		for (int j = 0; j < WORLD_HEIGHT; j++) {
-			world[i][j] = sTile
-			{
-				i, 
-				j,
-				GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_STONE)
-			};
+	levelGenerator->generateWorld(worldLevel);
+	levelGenerator->generateDungeon(dungeonLevel);
 
-			dungeon[i][j] = sTile
-			{
-				i,
-				j,
-				TILE_TYPE_DIRT
-			};
-		}
-	}
+	currentLevel = &worldLevel;
+	levelRenderer = new LevelRenderer(textures);
 
 	// initialized locations
 	player->initialize(4, 4, ZONE_WORLD);
@@ -51,6 +38,10 @@ void Game::gameUpdate() {
 	int oj = abs(player->j_ - orc->j_);
 	if (oi + oj <= TILE_WIDTH && player->zone_ == ZONE_DUNGEON && orc->isAlive_) {
 		interactTarget = orc;
+	}
+
+	if (IsKeyDown(KEY_G)) {
+		char* leak = new char[1000000]; // 1 MB every frame
 	}
 
 	int di = abs(player->i_ - dungeonGate->i_);
@@ -98,7 +89,12 @@ void Game::gameUpdate() {
 		combatTextTimer.isActive = false;
 	}
 
-	
+	if (player->zone_ == ZONE_WORLD) {
+		currentLevel = &worldLevel;
+	}
+	else if (player->zone_ == ZONE_DUNGEON) {
+		currentLevel = &dungeonLevel;
+	}
 }
 
 void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y) {
@@ -120,43 +116,10 @@ void Game::gameRender() {
 
 	BeginMode2D(camera);
 
-	sTile tile;
-	int texture_index_x = 0;
-	int texture_index_y = 0;
-	for (int i = 0; i < WORLD_WIDTH; i++) {
-		for (int j = 0; j < WORLD_HEIGHT; j++) {
-			
-			if (player->zone_ == ZONE_WORLD) {
-				tile = world[i][j];
-			}
-			else if (player->zone_ == ZONE_DUNGEON) {
-				tile = dungeon[i][j];
-			}
-
-			switch (tile.type) {
-			case TILE_TYPE_DIRT:
-				texture_index_x = 1;
-				texture_index_y = 1;
-				break;
-			case TILE_TYPE_GRASS:
-				texture_index_x = 5;
-				texture_index_y = 4;
-				break;
-			case TILE_TYPE_TREE:
-				texture_index_x = 5;
-				texture_index_y = 5;
-				break;
-			case TILE_TYPE_STONE:
-				texture_index_x = 4;
-				texture_index_y = 4;
-				break;
-			}
-
-			drawTile(tile.x * TILE_WIDTH, tile.y * TILE_HEIGHT, texture_index_x, texture_index_y);
-
-		}
+	if (levelRenderer != nullptr && currentLevel != nullptr) {
+		levelRenderer->renderLevel(*currentLevel);
 	}
-
+	
 	// Render dungeon gate
 	drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
 
@@ -194,7 +157,11 @@ void Game::gameShutdown() {
 		UnloadTexture(textures[i]);
 	}
 
-
+	
+	delete levelRenderer;
+	levelRenderer = nullptr;
+	delete levelGenerator;
+	levelGenerator = nullptr;
 	delete dungeonGate;
 	dungeonGate = nullptr;
 	delete player;
