@@ -3,23 +3,13 @@
 #include "Player.h"
 #include "DungeonDoor.h"
 #include "Enemy.h"
-
+#include "LevelGenerator.h"
+#include "LevelRenderer.h"
+#include "Orc.h"
+#include <vector>
 
 enum textureAsset {
 	TEXTURE_TILEMAP = 0
-};
-
-enum tyleType {
-	TILE_TYPE_DIRT,
-	TILE_TYPE_GRASS,
-	TILE_TYPE_TREE,
-	TILE_TYPE_STONE,
-};
-
-struct sTile {
-	int x;
-	int y;
-	int type;
 };
 
 struct Timer {
@@ -37,37 +27,40 @@ public:
 	void gameStartup();
 	void gameUpdate();
 	void gameRender();
-	void drawTile(int x, int y, int tileX, int tileY);
 	void gameShutdown();
+	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y);
 
 	void startTimer(Timer* timer, double lifetime);
 	bool isTimerDone(Timer timer);
 	double getElapsed(Timer timer);
 
+	static constexpr int TILE_SIZE = 8;
+
 private:
 
 	Entity* interactTarget;
 
-	Player* player = new Player();
-	Enemy* orc = new Enemy();
-	DungeonDoor* dungeonGate = new DungeonDoor();
+	Player* player;
+	Orc* orc;
+	DungeonDoor* dungeonGate;
+	std::vector<Enemy*> enemies;
+	Enemy* enemy1;
+	Enemy* enemy2;
 
-	static constexpr int TILE_WIDTH = 8;
-	static constexpr int TILE_HEIGHT = 8;
+	//static constexpr int TILE_HEIGHT = 8;
 	
 	static constexpr int MAX_TEXTURES = 1;
 
-	static constexpr int WORLD_WIDTH = 20; // 20 * tileWidth
-	static constexpr int WORLD_HEIGHT = 20; // 20 * tileHeight
-
 	Texture2D textures[MAX_TEXTURES];
-	
-	sTile world[WORLD_WIDTH][WORLD_HEIGHT];
-	sTile dungeon[WORLD_WIDTH][WORLD_HEIGHT];
+
+	Level worldLevel;
+	Level dungeonLevel;
+	Level* currentLevel = nullptr;
+
+	LevelGenerator* levelGenerator = new LevelGenerator();
+	LevelRenderer* levelRenderer = nullptr;
 
 	Camera2D camera = { 0 };
-
 	Timer combatTextTimer;
 
 };
-

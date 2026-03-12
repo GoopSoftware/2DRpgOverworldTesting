@@ -36,7 +36,22 @@
     <ClCompile Include="Game.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="InputHandler.h.cpp" />
+=======
+    <ClCompile Include="LevelRenderer.cpp">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelGenerator.cpp">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.h.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>src\entities</Filter>
+    </ClCompile>
+>>>>>>> 4509697d9dad2047e934b9501a06821bcbe52e7e
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -48,6 +63,7 @@
     <ClInclude Include="Player.h">
       <Filter>src\entities</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Command.h" />
     <ClInclude Include="DungeonDoor.h" />
     <ClInclude Include="Enemy.h" />
@@ -58,6 +74,51 @@
     <ClInclude Include="Spawner.h">
       <Filter>src\entities</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Enemy.h">
+      <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Combat.h">
+      <Filter>src\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractCommand.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonDoor.h">
+      <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelGenerator.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelRenderer.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>src\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatCommand.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+>>>>>>> 4509697d9dad2047e934b9501a06821bcbe52e7e
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\kenney_micro-roguelike\Tilemap\colored_tilemap_packed.png">

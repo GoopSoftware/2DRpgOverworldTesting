@@ -7,8 +7,11 @@ class DungeonDoor : public Entity {
 
 public:
 
-	DungeonDoor() {
-		debugName_ = "Dungeon Door";
+	DungeonDoor(int i, int j, Zone zone) :
+		Entity(i, j, zone) 
+	{
+		debugName_ = "Dungeon";
+		attackable_ = false;
 	}
 
 	void interact(Entity* actor) override {
