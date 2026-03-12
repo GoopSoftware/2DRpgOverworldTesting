@@ -7,9 +7,17 @@ class Enemy : public Entity
 
 public:
 
-	Enemy() {
-		debugName_ = "Enemy";
+	Enemy(int i, int j, Zone zone) :
+		Entity(i, j, zone) {}
+	
+
+	Enemy(int i, int j, Zone zone, int health)
+		: Entity(i, j, zone)
+	{
+		health_ = health;
 	}
+
+	virtual Enemy* clone() = 0;
 
 private:
 

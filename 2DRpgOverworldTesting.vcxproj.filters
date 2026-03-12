@@ -45,6 +45,9 @@
     <ClCompile Include="InputHandler.h.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>src\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -91,6 +94,12 @@
       <Filter>src\systems</Filter>
     </ClInclude>
     <ClInclude Include="CombatCommand.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
       <Filter>src\core</Filter>
     </ClInclude>
   </ItemGroup>

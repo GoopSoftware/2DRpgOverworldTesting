@@ -20,8 +20,7 @@ class Level {
 public:
 	static constexpr int WORLD_WIDTH_ = 20; // 20 * tileWidth
 	static constexpr int WORLD_HEIGHT_ = 20; // 20 * tileHeight
-	static constexpr int TILE_SIZE_ = 8;
-	
+
 	Tile tiles[WORLD_WIDTH_][WORLD_WIDTH_];
 
 private:

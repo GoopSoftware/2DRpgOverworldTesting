@@ -5,6 +5,7 @@
 #include "Enemy.h"
 #include "LevelGenerator.h"
 #include "LevelRenderer.h"
+#include "Orc.h"
 
 
 enum textureAsset {
@@ -33,16 +34,19 @@ public:
 	bool isTimerDone(Timer timer);
 	double getElapsed(Timer timer);
 
+	static constexpr int TILE_SIZE = 8;
+
 private:
 
 	Entity* interactTarget;
 
-	Player* player = new Player(4, 4, ZONE_WORLD);
-	Enemy* orc = new Enemy();
-	DungeonDoor* dungeonGate = new DungeonDoor();
+	Player* player;
+	Orc* orc;
+	Enemy* enemy1;
+	Enemy* enemy2;
+	DungeonDoor* dungeonGate;
 
-	static constexpr int TILE_WIDTH = 8;
-	static constexpr int TILE_HEIGHT = 8;
+	//static constexpr int TILE_HEIGHT = 8;
 	
 	static constexpr int MAX_TEXTURES = 1;
 

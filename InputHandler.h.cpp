@@ -5,8 +5,8 @@
 #include "InteractCommand.h"
 #include "CombatCommand.h"
 #include "Combat.h"
+#include "Constants.h"
 
-static constexpr int TILE_SIZE = 8;
 
 Command* InputHandler::handleInput(Entity* player, Entity* interactTarget) {
 

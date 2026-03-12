@@ -1,4 +1,6 @@
 #include "LevelRenderer.h"
+#include "Game.h"
+#include "Constants.h"
 
 void LevelRenderer::renderLevel(const Level& level) {
     int texture_index_x = 0;
@@ -31,7 +33,7 @@ void LevelRenderer::renderLevel(const Level& level) {
                 break;
             }
 
-            drawTile(tile.x * TILE_SIZE_, tile.y * TILE_SIZE_, texture_index_x, texture_index_y);
+            drawTile(tile.x * TILE_SIZE, tile.y * TILE_SIZE, texture_index_x, texture_index_y);
         }
     }
 }
@@ -39,14 +41,14 @@ void LevelRenderer::renderLevel(const Level& level) {
 
 void LevelRenderer::drawTile(int posX, int posY, int texture_index_x, int texture_index_y) {
 
-    Rectangle source = { static_cast<float>(texture_index_x * TILE_SIZE_),
-                                 static_cast<float>(texture_index_y * TILE_SIZE_),
-                                 static_cast<float>(TILE_SIZE_),
-                                 static_cast<float>(TILE_SIZE_) };
+    Rectangle source = { static_cast<float>(texture_index_x * TILE_SIZE),
+                                 static_cast<float>(texture_index_y * TILE_SIZE),
+                                 static_cast<float>(TILE_SIZE),
+                                 static_cast<float>(TILE_SIZE) };
     Rectangle dest = { static_cast<float>(posX),
                              static_cast<float>(posY),
-                             static_cast<float>(TILE_SIZE_),
-                             static_cast<float>(TILE_SIZE_) };
+                             static_cast<float>(TILE_SIZE),
+                             static_cast<float>(TILE_SIZE) };
     Vector2 origin = { 0, 0 };
 
     DrawTexturePro(textures_[0], source, dest, origin, 0.0f, WHITE);

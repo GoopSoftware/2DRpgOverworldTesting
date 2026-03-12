@@ -12,7 +12,8 @@ public:
 	{}
 
 	virtual void execute() override {
-		if (attacker_ && target_) {
+		if (attacker_ && target_ && target_->attackable_) {
+		
 			int damage = Combat::attack(attacker_, target_);
 			std::cout << target_->debugName_ << " took " << damage << " damage\n";
 

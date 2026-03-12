@@ -136,11 +136,13 @@
     <ClCompile Include="LevelGenerator.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Orc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Combat.h" />
     <ClInclude Include="CombatCommand.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="DungeonDoor.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
@@ -151,6 +153,7 @@
     <ClInclude Include="LevelGenerator.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="Orc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="Weapon.h" />

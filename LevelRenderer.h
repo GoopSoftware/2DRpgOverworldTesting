@@ -12,7 +12,6 @@ public:
 private:
 	Texture2D* textures_;
 
-	static constexpr int TILE_SIZE_ = 8;
 
 	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y);
 
