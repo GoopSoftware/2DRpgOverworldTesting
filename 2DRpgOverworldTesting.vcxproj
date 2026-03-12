@@ -138,6 +138,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Combat.h" />
+    <ClInclude Include="CombatCommand.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="DungeonDoor.h" />
     <ClInclude Include="Enemy.h" />

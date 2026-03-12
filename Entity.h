@@ -30,19 +30,19 @@ public:
 	int i_;
 	int j_;
 	Zone zone_;
-
+	bool isAlive_ = true;
 	const char* debugName_ = "Entity";
+	int health_ = 50;
+
+	// This variable is important! The combat class changes this variable when it calculates damage
+	// Use this variable to display damage over the enemies head
+	int damage_ = 0;
+	
+	int attackPower_ = 0;
+	int defense_ = 0;
 
 	virtual void interact(Entity* actor) {}
 
-
-	int damage_ = 0;
-	bool isAlive_ = true;
-
-	int attack() {
-		damage_ = GetRandomValue(10, 30);
-		return damage_;
-	}
 
 private:
 

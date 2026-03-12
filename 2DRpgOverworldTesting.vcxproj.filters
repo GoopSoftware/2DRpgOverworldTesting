@@ -36,9 +36,15 @@
     <ClCompile Include="Game.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.h.cpp" />
-    <ClCompile Include="LevelGenerator.cpp" />
-    <ClCompile Include="LevelRenderer.cpp" />
+    <ClCompile Include="LevelRenderer.cpp">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelGenerator.cpp">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.h.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -50,18 +56,42 @@
     <ClInclude Include="Player.h">
       <Filter>src\entities</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="DungeonDoor.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InteractCommand.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LevelGenerator.h" />
-    <ClInclude Include="LevelRenderer.h" />
-    <ClInclude Include="MoveCommand.h" />
-    <ClInclude Include="Spawner.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="Enemy.h">
       <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Combat.h">
+      <Filter>src\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractCommand.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonDoor.h">
+      <Filter>src\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelGenerator.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelRenderer.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>src\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatCommand.h">
+      <Filter>src\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

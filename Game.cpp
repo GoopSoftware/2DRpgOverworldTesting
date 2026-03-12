@@ -2,6 +2,7 @@
 #include "InputHandler.h"
 #include <iostream>
 #include <string>
+#include "Combat.h"
 
 void Game::gameStartup() {
 	InitAudioDevice();
@@ -51,6 +52,7 @@ void Game::gameUpdate() {
 		interactTarget = dungeonGate;
 	}
 
+	// This is not a memory leak, handleInput() returns a nullptr if no command
 	Command* command = InputHandler::handleInput(player, interactTarget);
 
 	if (command) {
@@ -60,21 +62,14 @@ void Game::gameUpdate() {
 
 	if (interactTarget == orc) {
 		if (IsKeyPressed(KEY_SPACE)) {
-			
-			orc->health_ -= player->attack();
 			std::cout << orc->health_ << std::endl;
-
 			if (!combatTextTimer.isActive) {
 				combatTextTimer.isActive = true;
 				startTimer(&combatTextTimer, .50f);
 			}
 		}
 	}
-	if (orc->health_ <= 0) {
-		orc->isAlive_ = false;
-	}
-
-
+	
 	float wheel = GetMouseWheelMove();
 
 	if (wheel != 0) {

@@ -11,8 +11,6 @@ public:
 		debugName_ = "Enemy";
 	}
 
-	int health_ = 100;
-
 private:
 
 	
