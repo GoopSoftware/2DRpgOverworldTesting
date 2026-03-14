@@ -134,6 +134,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="InputHandler.h.cpp" />
     <ClCompile Include="LevelGenerator.cpp" />
+    <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="InteractCommand.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelGenerator.h" />
+    <ClInclude Include="LevelManager.h" />
     <ClInclude Include="LevelRenderer.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="Orc.h" />

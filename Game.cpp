@@ -5,6 +5,7 @@
 #include "Combat.h"
 #include "Spawner.h"
 #include "raylib.h"
+#include "LevelManager.h"
 
 void Game::gameStartup() {
 	InitAudioDevice();
@@ -19,6 +20,7 @@ void Game::gameStartup() {
 	// level.h holds the data of the level
 	// LevelRenderer.h shows the tiles on screen
 	// This logic will eventually turn into a method
+
 	levelGenerator->generateWorld(worldLevel);
 	levelGenerator->generateDungeon(dungeonLevel);
 	currentLevel = &worldLevel;
