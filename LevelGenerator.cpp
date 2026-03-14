@@ -7,7 +7,7 @@ void LevelGenerator::generateOverWorld(Level& level) {
             level.tiles[i][j] = Tile{
                 i,
                 j,
-                static_cast<TileType>(GetRandomValue(TILE_TYPE_GRASS, TILE_TYPE_GRASS))
+                static_cast<TileType>(GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_DIRT))
             };
         }
     }

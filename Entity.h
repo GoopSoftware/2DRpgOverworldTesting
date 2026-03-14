@@ -3,11 +3,19 @@
 #include "Constants.h"
 
 enum Zone {
+	ZONE_OVERWORLD,
 	ZONE_ALL,
 	ZONE_WORLD,
-	ZONE_DUNGEON
+	ZONE_DUNGEON,
+	ZONE_WORLD_AND_DUNGEON
 };
 
+enum InteractionType {
+	INTERACT_NONE,
+	INTERACT_ENTER_WORLD,
+	INTERACT_DOOR,
+	INTERACT_EXIT_TO_OVERWORLD,
+};
 
 class Entity
 {
@@ -15,10 +23,12 @@ class Entity
 public:
 	Entity() {};
 
-	Entity(int i, int j, Zone zone) :
+	Entity(int i, int j, Zone zone, InteractionType interactionType = INTERACT_NONE) :
 		i_(i * TILE_SIZE),
 		j_(j * TILE_SIZE),
-		zone_(zone) {}
+		zone_(zone),
+		interactionType_(interactionType) {}
+
 	
 
 	int i_;
@@ -29,6 +39,7 @@ public:
 	bool isAlive_ = true;
 
 	const char* debugName_ = "Entity";
+	InteractionType interactionType_ = INTERACT_NONE;
 
 	int health_;
 
@@ -38,8 +49,6 @@ public:
 	
 	int attackPower_ = 0;
 	int defense_ = 0;
-
-	virtual void interact(Entity* actor) {}
 
 
 private:

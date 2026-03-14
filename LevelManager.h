@@ -10,12 +10,16 @@ public:
 	~LevelManager() {
 	}
 
+	void initializeOverWorld();
+
 	void enterOverWorld();
 	void enterWorld();
 	void enterDungeon();
 	void exitToOverWorld();
 
 	Level* getCurrentLevel();
+	Level* getWorldLevel();
+	Level* getDungeonLevel();
 
 private:
 

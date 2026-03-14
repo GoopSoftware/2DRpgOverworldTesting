@@ -7,6 +7,7 @@
 #include "LevelRenderer.h"
 #include "Orc.h"
 #include <vector>
+#include "InteractionSystem.h"
 
 enum textureAsset {
 	TEXTURE_TILEMAP = 0
@@ -38,6 +39,10 @@ public:
 
 private:
 
+	LevelManager* levelManager;
+	LevelRenderer* levelRenderer = nullptr;
+	InteractionSystem* interactionSystem = nullptr;
+
 	Entity* interactTarget;
 
 	Player* player;
@@ -55,10 +60,6 @@ private:
 
 	Level worldLevel;
 	Level dungeonLevel;
-	Level* currentLevel = nullptr;
-
-	LevelGenerator* levelGenerator = new LevelGenerator();
-	LevelRenderer* levelRenderer = nullptr;
 
 	Camera2D camera = { 0 };
 	Timer combatTextTimer;

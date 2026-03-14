@@ -1,5 +1,9 @@
 #include "LevelManager.h"
 
+void LevelManager::initializeOverWorld() {
+	levelGenerator_.generateOverWorld(overWorldLevel_);
+}
+
 void LevelManager::enterOverWorld() {
 		currentLevel_ = &overWorldLevel_;
 }
@@ -39,4 +43,14 @@ void LevelManager::exitToOverWorld() {
 
 Level* LevelManager::getCurrentLevel() {
 	return currentLevel_;
+}
+
+Level* LevelManager::getWorldLevel()
+{
+	return worldLevel_;
+}
+
+Level* LevelManager::getDungeonLevel()
+{
+	return dungeonLevel_;
 }

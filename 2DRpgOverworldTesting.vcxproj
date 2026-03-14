@@ -132,7 +132,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputHandler.h.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="InteractionSystem.cpp" />
     <ClCompile Include="LevelGenerator.cpp" />
     <ClCompile Include="LevelManager.cpp" />
     <ClCompile Include="LevelRenderer.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InteractCommand.h" />
+    <ClInclude Include="InteractionSystem.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelGenerator.h" />
     <ClInclude Include="LevelManager.h" />
@@ -158,6 +160,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WorldExit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\kenney_micro-roguelike\Tilemap\colored_tilemap_packed.png" />

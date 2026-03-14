@@ -2,31 +2,25 @@
 
 #include "Command.h"
 #include "Entity.h"
-
-
+#include "InteractionSystem.h"
 
 class InteractCommand : public Command
 {
-
 public:
-
-	InteractCommand(Entity* controlEntity, Entity* interactEntity)
+	InteractCommand(Entity* controlEntity, Entity* interactEntity, InteractionSystem* interactionSystem)
 		: controlEntity_(controlEntity),
-		interactEntity_(interactEntity)
+		interactEntity_(interactEntity),
+		interactionSystem_(interactionSystem)
 	{}
 
 	virtual void execute() override {
-		if (interactEntity_) {
-			interactEntity_->interact(controlEntity_);
+		if (interactionSystem_) {
+			interactionSystem_->handleInteraction(controlEntity_, interactEntity_);
 		}
 	}
 
-
 private:
-
-	Entity* controlEntity_;
-	Entity* interactEntity_;
-
-
+	Entity* controlEntity_ = nullptr;
+	Entity* interactEntity_ = nullptr;
+	InteractionSystem* interactionSystem_ = nullptr;
 };
-

@@ -14,22 +14,17 @@ void Game::gameStartup() {
 	textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
 	UnloadImage(image);
 
+	levelManager = new LevelManager();
+	levelManager->initializeOverWorld();
+	levelManager->enterOverWorld();
 
-	// the key to generating a world
-	// LevelGenerator.h holds the algorithm to set tiles of the level
-	// level.h holds the data of the level
-	// LevelRenderer.h shows the tiles on screen
-	// This logic will eventually turn into a method
+	interactionSystem = new InteractionSystem(levelManager);
 
-	levelGenerator->generateWorld(worldLevel);
-	levelGenerator->generateDungeon(dungeonLevel);
-	currentLevel = &worldLevel;
 	levelRenderer = new LevelRenderer(textures);
-	// initialized locations of player and interactables
-	//player->initialize(4, 4, ZONE_WORLD);
-	player = new Player(4, 4, ZONE_WORLD);
-	dungeonGate = new DungeonDoor(10, 10, ZONE_ALL);
 
+	// This gets moved into LevelManager
+	player = new Player(4, 4, ZONE_OVERWORLD);
+	dungeonGate = new DungeonDoor(10, 10, ZONE_WORLD_AND_DUNGEON);
 
 	// Spawner proof of concept
 	Orc* prototype = new Orc(5, 5, ZONE_DUNGEON, 100, 12, 6);
@@ -52,6 +47,21 @@ void Game::gameStartup() {
 
 void Game::gameUpdate() {
 
+	if (IsKeyPressed(KEY_Y)) {
+		player->zone_ = ZONE_OVERWORLD;
+		levelManager->enterOverWorld();
+	}
+	
+	if (IsKeyPressed(KEY_U)) {
+		player->zone_ = ZONE_WORLD;
+		levelManager->enterWorld();
+	}
+	
+	if (IsKeyPressed(KEY_I)) {
+		player->zone_ = ZONE_DUNGEON;
+		levelManager->enterDungeon();
+	}
+
 	// If player is + or -  allow interaction
 	// interact target gets reset to nullptr every frame if there is no interaction target
 	// Create an entity called interactTarget
@@ -66,17 +76,18 @@ void Game::gameUpdate() {
 
 	int di = abs(player->i_ - dungeonGate->i_);
 	int dj = abs(player->j_ - dungeonGate->j_);
-	if (di + dj <= TILE_SIZE) {
+	if (di + dj <= TILE_SIZE && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
 		interactTarget = dungeonGate;
 	}
 
 	// This is not a memory leak, handleInput() returns a nullptr if no command
-	Command* command = InputHandler::handleInput(player, interactTarget);
+	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem);
 
 
 	if (command) {
 		command->execute();
 		delete command;
+		command = nullptr;
 	}
 
 	for (Enemy* enemy : enemies) {
@@ -108,12 +119,6 @@ void Game::gameUpdate() {
 		combatTextTimer.isActive = false;
 	}
 
-	if (player->zone_ == ZONE_WORLD) {
-		currentLevel = &worldLevel;
-	}
-	else if (player->zone_ == ZONE_DUNGEON) {
-		currentLevel = &dungeonLevel;
-	}
 }
 
 void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y) {
@@ -135,12 +140,16 @@ void Game::gameRender() {
 
 	BeginMode2D(camera);
 
+	Level* currentLevel = levelManager->getCurrentLevel();
 	if (levelRenderer != nullptr && currentLevel != nullptr) {
 		levelRenderer->renderLevel(*currentLevel);
 	}
 	
-	// Render dungeon gate
-	drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
+	
+	// temp old object rendering
+	if (dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
+		drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
+	}
 
 
 	// spawner rendering
@@ -183,15 +192,20 @@ void Game::gameShutdown() {
 		UnloadTexture(textures[i]);
 	}
 
-	
 	delete levelRenderer;
 	levelRenderer = nullptr;
-	delete levelGenerator;
-	levelGenerator = nullptr;
+	
+	delete levelManager;
+	levelManager = nullptr;
+
 	delete dungeonGate;
 	dungeonGate = nullptr;
+	
 	delete player;
 	player = nullptr;
+
+	delete interactionSystem;
+	interactionSystem = nullptr;
 	
 	for (Enemy* enemy : enemies) {
 		delete enemy;
