@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
-#include "Constants.h"
+
+#include "../Constants.h"
 
 enum Zone {
 	ZONE_OVERWORLD,

@@ -131,39 +131,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="InteractionSystem.cpp" />
-    <ClCompile Include="LevelGenerator.cpp" />
-    <ClCompile Include="LevelManager.cpp" />
-    <ClCompile Include="LevelRenderer.cpp" />
+    <ClCompile Include="commands\Command.cpp" />
+    <ClCompile Include="game\Game.cpp" />
+    <ClCompile Include="input\InputHandler.cpp" />
+    <ClCompile Include="interaction\InteractionSystem.cpp" />
+    <ClCompile Include="level\LevelGenerator.cpp" />
+    <ClCompile Include="level\LevelManager.cpp" />
+    <ClCompile Include="rendering\LevelRenderer.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Combat.h" />
-    <ClInclude Include="CombatCommand.h" />
-    <ClInclude Include="Command.h" />
+    <ClInclude Include="combat\Combat.h" />
+    <ClInclude Include="commands\CombatCommand.h" />
+    <ClInclude Include="commands\Command.h" />
+    <ClInclude Include="commands\MoveCommand.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="DungeonDoor.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InteractCommand.h" />
-    <ClInclude Include="InteractionSystem.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="LevelGenerator.h" />
-    <ClInclude Include="LevelManager.h" />
-    <ClInclude Include="LevelRenderer.h" />
-    <ClInclude Include="MoveCommand.h" />
-    <ClInclude Include="Orc.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Spawner.h" />
+    <ClInclude Include="entities\DungeonDoor.h" />
+    <ClInclude Include="entities\Enemy.h" />
+    <ClInclude Include="entities\Entity.h" />
+    <ClInclude Include="entities\Orc.h" />
+    <ClInclude Include="entities\Player.h" />
+    <ClInclude Include="game\Game.h" />
+    <ClInclude Include="input\InputHandler.h" />
+    <ClInclude Include="interaction\InteractCommand.h" />
+    <ClInclude Include="interaction\InteractionSystem.h" />
+    <ClInclude Include="level\Level.h" />
+    <ClInclude Include="level\LevelGenerator.h" />
+    <ClInclude Include="level\LevelManager.h" />
+    <ClInclude Include="rendering\LevelRenderer.h" />
+    <ClInclude Include="spawning\Spawner.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldExit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\kenney_micro-roguelike\Tilemap\colored_tilemap_packed.png" />
+    <Image Include="assets\colored_tilemap_packed.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

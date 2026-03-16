@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Command.h"
-#include "Entity.h"
-
-
+#include "../commands/Command.h"
+#include "../entities/Entity.h"
 
 class MoveCommand : public Command
 {

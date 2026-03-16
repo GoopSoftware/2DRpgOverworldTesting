@@ -1,6 +1,4 @@
 #include "LevelRenderer.h"
-#include "Game.h"
-#include "Constants.h"
 
 void LevelRenderer::renderLevel(const Level& level) {
     int texture_index_x = 0;

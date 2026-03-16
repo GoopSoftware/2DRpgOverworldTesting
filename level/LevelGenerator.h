@@ -1,7 +1,11 @@
 #pragma once
-#include "Player.h"
-#include "Level.h"
 #include <vector>
+#include "raylib.h"
+#include <iostream>
+
+
+#include "Level.h"
+#include "../entities/Entity.h"
 
 struct SpawnPoint {
 	int i;

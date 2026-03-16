@@ -1,9 +1,14 @@
-
 #pragma once
-#include "LevelGenerator.h"
-#include "DungeonDoor.h"
 #include <vector>
-#include "Enemy.h"
+#include <iostream>
+
+#include "LevelGenerator.h"
+#include "Level.h"
+
+#include "../entities/Enemy.h"
+#include "../entities/DungeonDoor.h"
+#include "../entities/Orc.h"
+#include "../spawning/Spawner.h"
 
 
 class LevelManager {

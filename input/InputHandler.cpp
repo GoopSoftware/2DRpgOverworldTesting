@@ -1,12 +1,4 @@
-#include "InputHandler.h"
-#include <raylib.h>
-#include "MoveCommand.h"
-#include <iostream>
-#include "InteractCommand.h"
-#include "CombatCommand.h"
-#include "Combat.h"
-#include "Constants.h"
-
+#include "../input/InputHandler.h"
 
 Command* InputHandler::handleInput(Entity* player, Entity* interactTarget, InteractionSystem* interactionSystem) {
 

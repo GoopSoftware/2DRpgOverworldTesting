@@ -1,6 +1,8 @@
 #pragma once
 #include <raylib.h>
-#include "Level.h"
+
+#include "../level/Level.h"
+#include "../Constants.h"
 
 class LevelRenderer {
 public:

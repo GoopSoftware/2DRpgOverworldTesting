@@ -1,11 +1,6 @@
-#include "Game.h"
-#include "InputHandler.h"
-#include <iostream>
-#include <string>
-#include "Combat.h"
-#include "Spawner.h"
-#include "raylib.h"
-#include "LevelManager.h"
+#include "../game/Game.h"
+
+
 
 void Game::gameStartup() {
 	InitAudioDevice();

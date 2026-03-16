@@ -1,13 +1,19 @@
 #pragma once
 #include "raylib.h"
-#include "Player.h"
-#include "DungeonDoor.h"
-#include "Enemy.h"
-#include "LevelGenerator.h"
-#include "LevelRenderer.h"
-#include "Orc.h"
+#include <iostream>
+#include <string>
 #include <vector>
-#include "InteractionSystem.h"
+#include "raylib.h"
+
+#include "../entities/Player.h"
+#include "../input/InputHandler.h"
+#include "../entities/Enemy.h"
+#include "../commands/Command.h"
+#include "../level/LevelManager.h"
+#include "../rendering/LevelRenderer.h"
+#include "../interaction/InteractionSystem.h"
+
+
 
 enum textureAsset {
 	TEXTURE_TILEMAP = 0

@@ -1,7 +1,4 @@
 #include "LevelManager.h"
-#include "Orc.h"
-#include <iostream>
-#include "Spawner.h"
 
 void LevelManager::initializeOverWorld() {
 	levelGenerator_.generateOverWorld(overWorldLevel_);

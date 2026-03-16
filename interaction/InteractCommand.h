@@ -1,8 +1,8 @@
 #pragma once
+#include "../entities/Entity.h"
+#include "../commands/Command.h"
+#include "../interaction/InteractionSystem.h"
 
-#include "Command.h"
-#include "Entity.h"
-#include "InteractionSystem.h"
 
 class InteractCommand : public Command
 {

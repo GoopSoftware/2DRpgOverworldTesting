@@ -1,6 +1,6 @@
 #pragma once
-#include "Entity.h"
-#include "LevelManager.h"
+#include "../entities/Entity.h"
+#include "../level/LevelManager.h"
 
 class InteractionSystem {
 public:

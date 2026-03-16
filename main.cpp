@@ -1,6 +1,6 @@
 #include "raylib.h"
 #include "raymath.h"
-#include "Game.h"
+#include "game/Game.h"
 
 
 const int SCREENWIDTH = 800;

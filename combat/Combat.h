@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-#include "Entity.h"
+#include "../entities/Entity.h"
 
 class Combat {
 public:

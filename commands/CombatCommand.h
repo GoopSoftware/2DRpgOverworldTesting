@@ -1,6 +1,8 @@
 #pragma once
-#include "Command.h"
-#include "Combat.h"
+
+#include "../combat/Combat.h"
+#include "../commands/Command.h"
+#include <iostream>
 
 class CombatCommand : public Command
 {

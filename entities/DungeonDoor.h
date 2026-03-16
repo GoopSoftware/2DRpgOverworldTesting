@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Entity.h"
+#include "../entities/Entity.h"
+
 
 class DungeonDoor : public Entity {
 

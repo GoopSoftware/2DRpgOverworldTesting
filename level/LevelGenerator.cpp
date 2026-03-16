@@ -1,6 +1,5 @@
+
 #include "LevelGenerator.h"
-#include "raylib.h"
-#include <iostream>
 
 void LevelGenerator::generateOverWorld(Level& level) {
     for (int i = 0; i < Level::WORLD_WIDTH_; i++) {
