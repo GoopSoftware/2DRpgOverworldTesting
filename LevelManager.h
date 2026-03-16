@@ -1,5 +1,10 @@
+
 #pragma once
 #include "LevelGenerator.h"
+#include "DungeonDoor.h"
+#include <vector>
+#include "Enemy.h"
+
 
 class LevelManager {
 public:
@@ -8,6 +13,25 @@ public:
 	}
 
 	~LevelManager() {
+		delete dungeonGate;
+		dungeonGate = nullptr;
+
+		for (Enemy* enemy : worldEnemies) {
+			delete enemy;
+			enemy = nullptr;
+		}
+		for (Enemy* enemy : dungeonEnemies) {
+			delete enemy;
+			enemy = nullptr;
+		}
+
+		for (Entity* interactable : interactables) {
+			delete interactable;
+			interactable = nullptr;
+		}
+		
+		worldEnemies.clear();
+		dungeonEnemies.clear();
 	}
 
 	void initializeOverWorld();
@@ -21,6 +45,14 @@ public:
 	Level* getWorldLevel();
 	Level* getDungeonLevel();
 
+	void spawnDungeonDoor();
+	void spawnEnemies();
+
+
+	std::vector<Enemy*> worldEnemies;
+	std::vector<Enemy*> dungeonEnemies;
+
+
 private:
 
 	LevelGenerator levelGenerator_;
@@ -30,6 +62,13 @@ private:
 	Level* dungeonLevel_;
 
 	Level* currentLevel_ = nullptr;
+
+	DungeonDoor* dungeonGate;
+	std::vector<Entity*> interactables;
+
+
+
+
 
 
 };

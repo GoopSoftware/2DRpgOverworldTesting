@@ -44,16 +44,8 @@ private:
 	InteractionSystem* interactionSystem = nullptr;
 
 	Entity* interactTarget;
-
 	Player* player;
-	Orc* orc;
-	DungeonDoor* dungeonGate;
-	std::vector<Enemy*> enemies;
-	Enemy* enemy1;
-	Enemy* enemy2;
 
-	//static constexpr int TILE_HEIGHT = 8;
-	
 	static constexpr int MAX_TEXTURES = 1;
 
 	Texture2D textures[MAX_TEXTURES];

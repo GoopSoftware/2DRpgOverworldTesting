@@ -29,7 +29,7 @@ public:
 		zone_(zone),
 		interactionType_(interactionType) {}
 
-	
+
 
 	int i_;
 	int j_;

@@ -24,18 +24,6 @@ void Game::gameStartup() {
 
 	// This gets moved into LevelManager
 	player = new Player(4, 4, ZONE_OVERWORLD);
-	dungeonGate = new DungeonDoor(10, 10, ZONE_WORLD_AND_DUNGEON);
-
-	// Spawner proof of concept
-	Orc* prototype = new Orc(5, 5, ZONE_DUNGEON, 100, 12, 6);
-	Spawner spawner(prototype);
-
-	enemy1 = spawner.spawnEnemy(16, 14);
-	enemy2 = spawner.spawnEnemy(14, 14);
-	enemies.push_back(enemy1);
-	enemies.push_back(enemy2);
-
-
 
 	// Make camera follow player
 	camera.target = Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) };
@@ -66,19 +54,19 @@ void Game::gameUpdate() {
 	// interact target gets reset to nullptr every frame if there is no interaction target
 	// Create an entity called interactTarget
 	interactTarget = nullptr;
-	for (Enemy* enemy : enemies) {
+	/*for (Enemy* enemy : enemies) {
 		int oi = abs(player->i_ - enemy->i_);
 		int oj = abs(player->j_ - enemy->j_);
 		if (oi + oj <= TILE_SIZE && player->zone_ == enemy->zone_ && enemy->isAlive_) {
 			interactTarget = enemy;
 		}
-	}
+	}*/
 
-	int di = abs(player->i_ - dungeonGate->i_);
+	/*int di = abs(player->i_ - dungeonGate->i_);
 	int dj = abs(player->j_ - dungeonGate->j_);
 	if (di + dj <= TILE_SIZE && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
 		interactTarget = dungeonGate;
-	}
+	}*/
 
 	// This is not a memory leak, handleInput() returns a nullptr if no command
 	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem);
@@ -90,7 +78,7 @@ void Game::gameUpdate() {
 		command = nullptr;
 	}
 
-	for (Enemy* enemy : enemies) {
+	/*for (Enemy* enemy : enemies) {
 		if (interactTarget == enemy) {
 			if (IsKeyPressed(KEY_SPACE)) {
 				std::cout << enemy->health_ << std::endl;
@@ -100,7 +88,7 @@ void Game::gameUpdate() {
 				}
 			}
 		}
-	}
+	}*/
 
 	
 	
@@ -147,13 +135,20 @@ void Game::gameRender() {
 	
 	
 	// temp old object rendering
-	if (dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
+	/*if (dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
 		drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
-	}
+	}*/
 
 
 	// spawner rendering
-	for (Enemy* enemy : enemies) {
+	for (Enemy* enemy : levelManager->worldEnemies) {
+		if (enemy->zone_ == player->zone_ && enemy->isAlive_) {
+			drawTile(enemy->i_, enemy->j_, 11, 0);
+		}
+	}
+
+	// spawner rendering
+	for (Enemy* enemy : levelManager->dungeonEnemies) {
 		if (enemy->zone_ == player->zone_ && enemy->isAlive_) {
 			drawTile(enemy->i_, enemy->j_, 11, 0);
 		}
@@ -197,20 +192,13 @@ void Game::gameShutdown() {
 	
 	delete levelManager;
 	levelManager = nullptr;
-
-	delete dungeonGate;
-	dungeonGate = nullptr;
 	
 	delete player;
 	player = nullptr;
 
 	delete interactionSystem;
 	interactionSystem = nullptr;
-	
-	for (Enemy* enemy : enemies) {
-		delete enemy;
-	}
-	enemies.clear();
+
 
 }
 

@@ -1,4 +1,7 @@
 #include "LevelManager.h"
+#include "Orc.h"
+#include <iostream>
+#include "Spawner.h"
 
 void LevelManager::initializeOverWorld() {
 	levelGenerator_.generateOverWorld(overWorldLevel_);
@@ -15,6 +18,31 @@ void LevelManager::enterWorld() {
 
 		levelGenerator_.generateWorld(*worldLevel_);
 		levelGenerator_.generateDungeon(*dungeonLevel_);
+
+		std::vector<SpawnPoint> worldEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_WORLD);
+		std::vector<SpawnPoint> dungeonEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_DUNGEON);
+		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10);
+
+		Spawner spawner(orcPrototype);
+		for (SpawnPoint& spawn : worldEnemyPositions) {
+			worldEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_WORLD));
+		}
+
+		for (SpawnPoint& spawn : dungeonEnemyPositions) {
+			dungeonEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_DUNGEON));
+		}
+
+		for (Enemy* e : worldEnemies) {
+			// Make sure they are spawning in pos alive
+			std::cout << e->i_ / 8 << e->j_ / 8 << e->isAlive_ << std::endl;
+		}
+		
+		for (Enemy* e : dungeonEnemies) {
+			// Make sure they are spawning in pos alive
+			std::cout << e->i_ / 8 << e->j_ / 8 << e->isAlive_ << std::endl;
+		}
+
+		spawnDungeonDoor();
 	}
 
 	currentLevel_ = worldLevel_;
@@ -53,4 +81,12 @@ Level* LevelManager::getWorldLevel()
 Level* LevelManager::getDungeonLevel()
 {
 	return dungeonLevel_;
+}
+
+void LevelManager::spawnDungeonDoor() {
+	dungeonGate = new DungeonDoor(10, 10, ZONE_WORLD_AND_DUNGEON);
+}
+
+void LevelManager::spawnEnemies() {
+
 }
