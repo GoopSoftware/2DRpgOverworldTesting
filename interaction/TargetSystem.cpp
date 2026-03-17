@@ -83,7 +83,7 @@ void TargetSystem::update(Player* player, LevelManager* levelManager) {
 	
 	buildCandidates(player,levelManager);
 	updateTargets(player, candidates);
-	std::cout << candidates.size() << std::endl;
+
 
 }
 

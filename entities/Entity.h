@@ -36,6 +36,8 @@ public:
 	int j_;
 	Zone zone_;
 
+	Color color = WHITE;
+
 	bool attackable_ = true;
 	bool isAlive_ = true;
 	bool isTargetable_ = true;

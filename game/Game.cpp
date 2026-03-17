@@ -48,15 +48,16 @@ void Game::gameUpdate() {
 
 	targetSystem->update(player, levelManager);
 	interactTarget = targetSystem->getCurrentTarget();
-	if (IsKeyPressed(KEY_TAB)) {
+
+
+	/*if (IsKeyPressed(KEY_TAB)) {
 		targetSystem->cycleTarget();
 		std::cout << targetSystem->getCurrentTarget() << std::endl;
-
-	}
+	}*/
 
 
 	// This is not a memory leak, handleInput() returns a nullptr if no command
-	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem);
+	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem, targetSystem);
 
 
 	if (command) {

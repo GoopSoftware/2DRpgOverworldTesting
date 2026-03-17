@@ -140,6 +140,7 @@
     <ClCompile Include="level\LevelManager.cpp" />
     <ClCompile Include="rendering\LevelRenderer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="commands\SwitchTargetCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="combat\Combat.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="level\LevelManager.h" />
     <ClInclude Include="rendering\LevelRenderer.h" />
     <ClInclude Include="spawning\Spawner.h" />
+    <ClInclude Include="commands\SwitchTargetCommand.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldExit.h" />
   </ItemGroup>
