@@ -80,12 +80,21 @@ Entity* TargetSystem::getCurrentTarget() const {
 }
 
 void TargetSystem::update(Player* player, LevelManager* levelManager) {
+	
+	buildCandidates(player,levelManager);
+	updateTargets(player, candidates);
+	std::cout << candidates.size() << std::endl;
+
+}
+
+void TargetSystem::buildCandidates(Player* player, LevelManager* levelManager) {
+	candidates.clear();
 	for (Entity* entity : levelManager->zoneAllEntities) {
 		candidates.push_back(entity);
 	}
 
 	if (player->zone_ == ZONE_WORLD) {
-		
+
 		for (Enemy* enemy : levelManager->worldEnemies) {
 			candidates.push_back(enemy);
 		}
@@ -103,7 +112,4 @@ void TargetSystem::update(Player* player, LevelManager* levelManager) {
 		}
 
 	}
-
-	updateTargets(player, candidates);
-
 }

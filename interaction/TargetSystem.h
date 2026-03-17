@@ -22,6 +22,7 @@ private:
 
 	std::vector<Entity*> nearbyTargets_;
 	int currentTargetIndex_ = -1;
+	void buildCandidates(Player* player, LevelManager* levelManager);
 
 	bool isNear(Entity* player, Entity* target) const;
 	int findTargetIndex(Entity* target) const;
