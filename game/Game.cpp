@@ -14,6 +14,7 @@ void Game::gameStartup() {
 	levelManager->enterOverWorld();
 
 	interactionSystem = new InteractionSystem(levelManager);
+	targetSystem = new TargetSystem();
 
 	levelRenderer = new LevelRenderer(textures);
 
@@ -45,23 +46,14 @@ void Game::gameUpdate() {
 		levelManager->enterDungeon();
 	}
 
-	// If player is + or -  allow interaction
-	// interact target gets reset to nullptr every frame if there is no interaction target
-	// Create an entity called interactTarget
-	interactTarget = nullptr;
-	/*for (Enemy* enemy : enemies) {
-		int oi = abs(player->i_ - enemy->i_);
-		int oj = abs(player->j_ - enemy->j_);
-		if (oi + oj <= TILE_SIZE && player->zone_ == enemy->zone_ && enemy->isAlive_) {
-			interactTarget = enemy;
-		}
-	}*/
+	targetSystem->update(player, levelManager);
+	interactTarget = targetSystem->getCurrentTarget();
+	if (IsKeyPressed(KEY_TAB)) {
+		targetSystem->cycleTarget();
+		std::cout << targetSystem->getCurrentTarget() << std::endl;
 
-	/*int di = abs(player->i_ - dungeonGate->i_);
-	int dj = abs(player->j_ - dungeonGate->j_);
-	if (di + dj <= TILE_SIZE && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
-		interactTarget = dungeonGate;
-	}*/
+	}
+
 
 	// This is not a memory leak, handleInput() returns a nullptr if no command
 	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem);
@@ -71,21 +63,8 @@ void Game::gameUpdate() {
 		command->execute();
 		delete command;
 		command = nullptr;
-	}
+	}	
 
-	/*for (Enemy* enemy : enemies) {
-		if (interactTarget == enemy) {
-			if (IsKeyPressed(KEY_SPACE)) {
-				std::cout << enemy->health_ << std::endl;
-				if (!combatTextTimer.isActive) {
-					combatTextTimer.isActive = true;
-					startTimer(&combatTextTimer, .50f);
-				}
-			}
-		}
-	}*/
-
-	
 	
 	float wheel = GetMouseWheelMove();
 
@@ -129,10 +108,9 @@ void Game::gameRender() {
 	}
 	
 	
-	// temp old object rendering
-	/*if (dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
-		drawTile(dungeonGate->i_, dungeonGate->j_, 8, 9);
-	}*/
+	if (levelManager->dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
+		drawTile(levelManager->dungeonGate->i_, levelManager->dungeonGate->j_, 8, 9);
+	}
 
 
 	// spawner rendering
@@ -194,6 +172,8 @@ void Game::gameShutdown() {
 	delete interactionSystem;
 	interactionSystem = nullptr;
 
+	delete targetSystem;
+	targetSystem = nullptr;
 
 }
 

@@ -1,6 +1,6 @@
 #include "InteractionSystem.h"
 
-void InteractionSystem::handleInteraction(Entity* actor, Entity* target) {
+void InteractionSystem::interact(Entity* actor, Entity* target) {
 
 	if (!actor || !target || !levelManager_) return;
 
@@ -32,3 +32,6 @@ void InteractionSystem::handleInteraction(Entity* actor, Entity* target) {
 	}
 
 }
+
+
+

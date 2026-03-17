@@ -135,6 +135,7 @@
     <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="input\InputHandler.cpp" />
     <ClCompile Include="interaction\InteractionSystem.cpp" />
+    <ClCompile Include="interaction\TargetSystem.cpp" />
     <ClCompile Include="level\LevelGenerator.cpp" />
     <ClCompile Include="level\LevelManager.cpp" />
     <ClCompile Include="rendering\LevelRenderer.cpp" />
@@ -153,8 +154,9 @@
     <ClInclude Include="entities\Player.h" />
     <ClInclude Include="game\Game.h" />
     <ClInclude Include="input\InputHandler.h" />
-    <ClInclude Include="interaction\InteractCommand.h" />
+    <ClInclude Include="commands\InteractCommand.h" />
     <ClInclude Include="interaction\InteractionSystem.h" />
+    <ClInclude Include="interaction\TargetSystem.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\LevelGenerator.h" />
     <ClInclude Include="level\LevelManager.h" />

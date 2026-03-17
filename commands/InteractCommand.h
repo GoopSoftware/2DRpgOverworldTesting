@@ -15,7 +15,7 @@ public:
 
 	virtual void execute() override {
 		if (interactionSystem_) {
-			interactionSystem_->handleInteraction(controlEntity_, interactEntity_);
+			interactionSystem_->interact(controlEntity_, interactEntity_);
 		}
 	}
 

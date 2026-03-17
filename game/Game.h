@@ -12,6 +12,7 @@
 #include "../level/LevelManager.h"
 #include "../rendering/LevelRenderer.h"
 #include "../interaction/InteractionSystem.h"
+#include "../interaction/TargetSystem.h"
 
 
 
@@ -61,5 +62,7 @@ private:
 
 	Camera2D camera = { 0 };
 	Timer combatTextTimer;
+
+	TargetSystem* targetSystem = nullptr;
 
 };

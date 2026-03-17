@@ -82,6 +82,7 @@ Level* LevelManager::getDungeonLevel()
 
 void LevelManager::spawnDungeonDoor() {
 	dungeonGate = new DungeonDoor(10, 10, ZONE_WORLD_AND_DUNGEON);
+	zoneAllEntities.push_back(dungeonGate);
 }
 
 void LevelManager::spawnEnemies() {

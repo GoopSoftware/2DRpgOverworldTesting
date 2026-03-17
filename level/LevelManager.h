@@ -18,8 +18,7 @@ public:
 	}
 
 	~LevelManager() {
-		delete dungeonGate;
-		dungeonGate = nullptr;
+
 
 		for (Enemy* enemy : worldEnemies) {
 			delete enemy;
@@ -30,9 +29,19 @@ public:
 			enemy = nullptr;
 		}
 
-		for (Entity* interactable : interactables) {
-			delete interactable;
-			interactable = nullptr;
+		for (Entity* entity : zoneAllEntities) {
+			delete entity;
+			entity = nullptr;
+		}
+
+		for (Entity* entity : worldEntities) {
+			delete entity;
+			entity = nullptr;
+		}
+
+		for (Entity* entity : dungeonEntities) {
+			delete entity;
+			entity = nullptr;
 		}
 		
 		worldEnemies.clear();
@@ -56,6 +65,11 @@ public:
 
 	std::vector<Enemy*> worldEnemies;
 	std::vector<Enemy*> dungeonEnemies;
+	std::vector<Entity*> zoneAllEntities;
+	std::vector<Entity*> worldEntities;
+	std::vector<Entity*> dungeonEntities;
+
+	DungeonDoor* dungeonGate;
 
 
 private:
@@ -67,13 +81,5 @@ private:
 	Level* dungeonLevel_;
 
 	Level* currentLevel_ = nullptr;
-
-	DungeonDoor* dungeonGate;
-	std::vector<Entity*> interactables;
-
-
-
-
-
 
 };

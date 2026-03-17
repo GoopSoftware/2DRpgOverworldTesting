@@ -38,6 +38,7 @@ public:
 
 	bool attackable_ = true;
 	bool isAlive_ = true;
+	bool isTargetable_ = true;
 
 	const char* debugName_ = "Entity";
 	InteractionType interactionType_ = INTERACT_NONE;

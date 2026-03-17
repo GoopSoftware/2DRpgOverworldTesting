@@ -8,7 +8,7 @@ public:
 	InteractionSystem(LevelManager* levelManager)
 		: levelManager_(levelManager) {}
 
-	void handleInteraction(Entity* actor, Entity* target);
+	void interact(Entity* actor, Entity* target);
 
 private:
 

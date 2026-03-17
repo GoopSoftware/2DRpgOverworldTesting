@@ -8,7 +8,7 @@
 #include "../commands/CombatCommand.h"
 #include "../input/InputHandler.h"
 #include "../input/InputHandler.h"
-#include "../interaction/InteractCommand.h"
+#include "../commands/InteractCommand.h"
 #include "../interaction/InteractionSystem.h"
 #include "../entities/Entity.h"
 #include "../Constants.h"
