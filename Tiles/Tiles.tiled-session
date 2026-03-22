@@ -1,14 +1,30 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "MainMap.tmx": {
+            "scale": 5.0646875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 78.38588264330228,
+                "y": 83.42074412290985
+            }
+        },
         "colored_tilemap.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 8
         }
     },
     "last.imagePath": "C:/Users/Jake/source/repos/2DRpgOverworldTesting/2DRpgOverworldTesting/Tiles",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 20,
     "openFiles": [
     ],
     "project": "Tiles.tiled-project",

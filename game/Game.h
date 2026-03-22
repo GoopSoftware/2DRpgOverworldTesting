@@ -36,7 +36,7 @@ public:
 	void gameUpdate();
 	void gameRender();
 	void gameShutdown();
-	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y);
+	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y, Color color);
 
 	void startTimer(Timer* timer, double lifetime);
 	bool isTimerDone(Timer timer);

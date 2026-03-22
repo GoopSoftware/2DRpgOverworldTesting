@@ -18,7 +18,6 @@ void Game::gameStartup() {
 
 	levelRenderer = new LevelRenderer(textures);
 
-	// This gets moved into LevelManager
 	player = new Player(4, 4, ZONE_OVERWORLD);
 
 	// Make camera follow player
@@ -50,12 +49,6 @@ void Game::gameUpdate() {
 	interactTarget = targetSystem->getCurrentTarget();
 
 
-	/*if (IsKeyPressed(KEY_TAB)) {
-		targetSystem->cycleTarget();
-		std::cout << targetSystem->getCurrentTarget() << std::endl;
-	}*/
-
-
 	// This is not a memory leak, handleInput() returns a nullptr if no command
 	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem, targetSystem);
 
@@ -84,7 +77,7 @@ void Game::gameUpdate() {
 
 }
 
-void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y) {
+void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y, Color color) {
 
 	Rectangle source = { static_cast<float>(texture_index_x * TILE_SIZE),
 								 static_cast<float>(texture_index_y * TILE_SIZE),
@@ -96,7 +89,7 @@ void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y
 							 static_cast<float>(TILE_SIZE) };
 	Vector2 origin = { 0, 0 };
 
-	DrawTexturePro(textures[TEXTURE_TILEMAP], source, dest, origin, 0.0f, WHITE);
+	DrawTexturePro(textures[TEXTURE_TILEMAP], source, dest, origin, 0.0f, color);
 }
 
 void Game::gameRender() {
@@ -110,21 +103,21 @@ void Game::gameRender() {
 	
 	
 	if (levelManager->dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
-		drawTile(levelManager->dungeonGate->i_, levelManager->dungeonGate->j_, 8, 9);
+		drawTile(levelManager->dungeonGate->i_, levelManager->dungeonGate->j_, 8, 9, WHITE);
 	}
 
 
 	// spawner rendering
 	for (Enemy* enemy : levelManager->worldEnemies) {
 		if (enemy->zone_ == player->zone_ && enemy->isAlive_) {
-			drawTile(enemy->i_, enemy->j_, 11, 0);
+			drawTile(enemy->i_, enemy->j_, 11, 0, WHITE);
 		}
 	}
 
 	// spawner rendering
 	for (Enemy* enemy : levelManager->dungeonEnemies) {
 		if (enemy->zone_ == player->zone_ && enemy->isAlive_) {
-			drawTile(enemy->i_, enemy->j_, 11, 0);
+			drawTile(enemy->i_, enemy->j_, 11, 0, WHITE);
 		}
 	}
 
@@ -135,7 +128,12 @@ void Game::gameRender() {
 	
 	
 	// Render Player
-	drawTile(player->i_, player->j_, 4, 0);
+	if (player->zone_ == ZONE_OVERWORLD) {
+		drawTile(player->i_, player->j_, 5, 9, LIGHTGRAY);
+	}
+	else {
+		drawTile(player->i_, player->j_, 4, 0, WHITE);
+	}
 
 
 	EndMode2D();
@@ -157,6 +155,7 @@ void Game::gameRender() {
 void Game::gameShutdown() {
 
 	CloseAudioDevice();
+
 	for (int i = 0; i < MAX_TEXTURES; i++) {
 		UnloadTexture(textures[i]);
 	}
