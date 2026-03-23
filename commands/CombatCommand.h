@@ -16,16 +16,19 @@ public:
 	virtual void execute() override {
 		if (attacker_ && target_ && target_->attackable_) {
 		
-			int damage = Combat::attack(attacker_, target_);
-			std::cout << target_->debugName_ << " took " << damage << " damage\n";
+			combatResult_ = Combat::attack(attacker_, target_);
+			std::cout << target_->debugName_ << " took " << combatResult_.damage << " damage\n";
 
 		}
 	}
+
+
+	CombatResult getCombatResult() { return combatResult_; }
 
 
 private:
 
 	Entity* attacker_;
 	Entity* target_;
-
+	CombatResult combatResult_;
 };

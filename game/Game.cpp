@@ -5,6 +5,8 @@
 void Game::gameStartup() {
 	InitAudioDevice();
 
+	hitSound = LoadSound("assets/hitHurt.wav");
+
 	overWorld = LoadTexture("assets/Overworld.png");
 	playerTexture = LoadTexture("assets/Sprite1.png");
 	
@@ -33,6 +35,9 @@ void Game::gameStartup() {
 }
 
 void Game::gameUpdate() {
+
+	deltaTime = GetFrameTime();
+	updateFloatingText(deltaTime);
 
 	// player animation
 	timer += GetFrameTime();
@@ -67,6 +72,9 @@ void Game::gameUpdate() {
 
 	if (command) {
 		command->execute();
+
+		handleCommandResult(command);
+
 		delete command;
 		command = nullptr;
 	}	
@@ -82,10 +90,6 @@ void Game::gameUpdate() {
 	}
 
 	camera.target = (Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) });
-
-	if (isTimerDone(combatTextTimer)) {
-		combatTextTimer.isActive = false;
-	}
 
 }
 
@@ -135,11 +139,8 @@ void Game::gameRender() {
 		}
 	}
 
-	if (combatTextTimer.isActive && interactTarget != nullptr) {
-		DrawText(TextFormat("%d", player->damage_), interactTarget->i_, interactTarget->j_ - 10, 9, YELLOW);
-	}
-	
-	
+	renderFloatingText();
+
 	// Render Player
 	int frameWidth = playerTexture.width / 6;
 
@@ -158,25 +159,32 @@ void Game::gameRender() {
 		DrawTextureRec(playerTexture, src, { static_cast<float>(player->i_), static_cast<float>(player->j_) }, WHITE);
 	}
 
+	// highlight current target
+	if (interactTarget != nullptr && interactTarget->isAlive_) {
+		DrawRectangleLinesEx(
+			Rectangle{  static_cast<float>(interactTarget->i_),
+						static_cast<float>(interactTarget->j_),
+						static_cast<float>(TILE_SIZE),
+						static_cast<float>(TILE_SIZE) },
+						.25f,
+						YELLOW
+						);
+	}
 
 	EndMode2D();
 
-	/*DrawRectangle(5, 5, 330, 120, Fade(SKYBLUE, 0.5f));
-	DrawRectangleLines(5, 5, 330, 120, BLUE);
-	DrawText(TextFormat("Camera Target: (%6.2f, %6.2f)", (camera.target.x / TILE_SIZE), (camera.target.y / TILE_SIZE)), 15, 10, 19, YELLOW);
-	DrawText(TextFormat("Camera Zoom: %06.2f", camera.zoom), 15, 30, 19, YELLOW);
-	if (interactTarget != nullptr) {
-		DrawText(TextFormat("Interact Target: %s", interactTarget->debugName_), 15, 50, 19, YELLOW);
+	if (IsKeyPressed(KEY_P)) {
+		debugWindow = !debugWindow;
 	}
-	else {
-		DrawText("Interact Target: ", 15, 50, 19, YELLOW);
-	}*/
-
+	if (debugWindow) {
+		renderDebugWindow();
+	}
 }
 
 
 void Game::gameShutdown() {
 
+	UnloadSound(hitSound);
 	CloseAudioDevice();
 
 	for (int i = 0; i < MAX_TEXTURES; i++) {
@@ -200,16 +208,82 @@ void Game::gameShutdown() {
 
 }
 
+void Game::spawnFloatingText(const std::string& text, float x, float y) {
+	FloatingText floatingText;
+	floatingText.text = text;
+	floatingText.x = x;
+	floatingText.y = y;
+	floatingText.elapsed = 0.0f;
+	floatingText.lifetime = 0.75f;
+	floatingText.active = true;
 
-void Game::startTimer(Timer* timer, double lifetime) {
-	timer->startTime = GetTime();
-	timer->lifeTime = lifetime;
+	floatingTexts.push_back(floatingText);
 }
 
-bool Game::isTimerDone(Timer timer) {
-	return GetTime() - timer.startTime >= timer.lifeTime;
+void Game::updateFloatingText(float deltaTime) {
+	for (auto& floatingText : floatingTexts) {
+		if (!floatingText.active) continue;
+
+		floatingText.elapsed += deltaTime;
+		floatingText.y -= 20.f * deltaTime;
+
+		if (floatingText.elapsed >= floatingText.lifetime) {
+			floatingText.active = false;
+		}
+	}
+
+	// we want to control the iteration here to prevent erase messing up the iteration
+	for (auto iteration = floatingTexts.begin(); iteration != floatingTexts.end();) {
+		if (!iteration->active) {
+			iteration = floatingTexts.erase(iteration);
+		}
+		else {
+			iteration++;
+		}
+	}
+
 }
 
-double Game::getElapsed(Timer timer) {
-	return GetTime() - timer.startTime;
+void Game::renderFloatingText() {
+	for (const auto& floatingText : floatingTexts) {
+		//DrawText(floatingText.text.c_str(), static_cast<int>(floatingText.x), static_cast<int>(floatingText.y), 1, YELLOW);
+		DrawTextEx(GetFontDefault(), floatingText.text.c_str(), Vector2(floatingText.x + 1.5f, floatingText.y), 5.f, 1.f, YELLOW);
+		//DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint);
+	}
+
+}
+
+void Game::handleCommandResult(Command* command) {
+
+	// Derived* ptr = dynamic_cast<Derived*>(basePtr);
+	// Convert base class to a derived class. In this case we used polymorphism for all Commands
+	// For this case we need to turn that basic Command into a CombatCommand
+	CombatCommand* combatCommand = dynamic_cast<CombatCommand*>(command);
+	if (combatCommand) {
+		PlaySound(hitSound);
+		CombatResult result = combatCommand->getCombatResult();
+
+		if (result.successfulHit && result.target) {
+			spawnFloatingText(
+				std::to_string(result.damage),
+				static_cast<float>(result.target->i_),
+				static_cast<float>(result.target->j_)
+				);
+		}
+	}
+
+
+}
+
+void Game::renderDebugWindow() {
+	DrawRectangle(5, 5, 330, 120, Fade(SKYBLUE, 0.5f));
+	DrawRectangleLines(5, 5, 330, 120, BLUE);
+	DrawText(TextFormat("Camera Target: (%6.2f, %6.2f)", (camera.target.x / TILE_SIZE), (camera.target.y / TILE_SIZE)), 15, 10, 19, YELLOW);
+	DrawText(TextFormat("Camera Zoom: %06.2f", camera.zoom), 15, 30, 19, YELLOW);
+		if (interactTarget != nullptr) {
+	DrawText(TextFormat("Interact Target: %s", interactTarget->debugName_), 15, 50, 19, YELLOW);
+	}
+		else {
+	DrawText("Interact Target: ", 15, 50, 19, YELLOW);
+	}
 }

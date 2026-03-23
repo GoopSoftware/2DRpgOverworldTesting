@@ -46,20 +46,19 @@ public:
 	void gameShutdown();
 	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y, Color color);
 
-	/*void updateSprite();
-	void drawSprite();*/
-
-	void startTimer(Timer* timer, double lifetime);
-	bool isTimerDone(Timer timer);
-	double getElapsed(Timer timer);
-
-
 	// Timer struct code
 	// TODO move into its own system
+	void spawnFloatingText(const std::string& text, float x, float y);
+	void updateFloatingText(float deltaTime);
+	void renderFloatingText();
 
+	float deltaTime = 0;
 
 private:
-
+	Sound hitSound;
+	
+	
+		
 	Texture2D overWorld;
 
 
@@ -81,8 +80,9 @@ private:
 	Timer combatTextTimer;
 
 	TargetSystem* targetSystem = nullptr;
-
 	
+	void handleCommandResult(Command* command);
+
 	// Timer struct code
 	// TODO move into its own system
 	std::vector<FloatingText> floatingTexts;
@@ -95,5 +95,6 @@ private:
 	float speed = 0.1f;
 	int frameWidth = playerTexture.width / 6;
 
-
+	bool debugWindow = false;
+	void renderDebugWindow();
 };
