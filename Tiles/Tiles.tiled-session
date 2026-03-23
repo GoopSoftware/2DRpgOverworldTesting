@@ -11,8 +11,8 @@
             "scale": 5.0646875,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 78.38588264330228,
-                "y": 83.42074412290985
+                "x": 77.79354599864259,
+                "y": 73.84463503424446
             }
         },
         "colored_tilemap.tsx": {
@@ -20,7 +20,9 @@
             "scaleInEditor": 8
         }
     },
+    "last.exportedFilePath": "C:/Users/Jake/source/repos/2DRpgOverworldTesting/2DRpgOverworldTesting/assets",
     "last.imagePath": "C:/Users/Jake/source/repos/2DRpgOverworldTesting/2DRpgOverworldTesting/Tiles",
+    "map.lastUsedExportFilter": "All Files (*)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 8,
     "map.tileWidth": 8,

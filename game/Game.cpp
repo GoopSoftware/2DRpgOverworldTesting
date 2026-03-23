@@ -5,7 +5,11 @@
 void Game::gameStartup() {
 	InitAudioDevice();
 
-	Image image = LoadImage("assets/colored_tilemap_packed.png");
+	overWorld = LoadTexture("assets/Overworld.png");
+	playerTexture = LoadTexture("assets/Sprite1.png");
+	
+	Image image = LoadImage("assets/tilePack.png");
+	
 	textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
 	UnloadImage(image);
 
@@ -18,17 +22,25 @@ void Game::gameStartup() {
 
 	levelRenderer = new LevelRenderer(textures);
 
-	player = new Player(4, 4, ZONE_OVERWORLD);
+	player = new Player(1, 16, ZONE_OVERWORLD);
 
 	// Make camera follow player
 	camera.target = Vector2{ static_cast<float>(player->i_), static_cast<float>(player->j_) };
 	camera.offset = Vector2{ static_cast<float>(GetScreenWidth() / 2), static_cast<float>(GetScreenHeight() / 2) };
 	camera.rotation = 0.f;
-	camera.zoom = 3.f;
+	camera.zoom = 6.f;
 
 }
 
 void Game::gameUpdate() {
+
+	// player animation
+	timer += GetFrameTime();
+	if (timer >= speed) {
+		timer = 0;
+		frame = (frame + 1) % 6;
+	}
+
 
 	if (IsKeyPressed(KEY_Y)) {
 		player->zone_ = ZONE_OVERWORLD;
@@ -92,6 +104,8 @@ void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y
 	DrawTexturePro(textures[TEXTURE_TILEMAP], source, dest, origin, 0.0f, color);
 }
 
+
+
 void Game::gameRender() {
 
 	BeginMode2D(camera);
@@ -122,23 +136,32 @@ void Game::gameRender() {
 	}
 
 	if (combatTextTimer.isActive && interactTarget != nullptr) {
-
 		DrawText(TextFormat("%d", player->damage_), interactTarget->i_, interactTarget->j_ - 10, 9, YELLOW);
 	}
 	
 	
 	// Render Player
+	int frameWidth = playerTexture.width / 6;
+
+	Rectangle src = {
+		static_cast<float>(frame * frameWidth),
+		0,
+		static_cast<float>(frameWidth),
+		static_cast<float>(playerTexture.height)
+	};
+
 	if (player->zone_ == ZONE_OVERWORLD) {
-		drawTile(player->i_, player->j_, 5, 9, LIGHTGRAY);
+		DrawTextureEx(overWorld, Vector2(0.f, 0.f), 0.f, 1.f, WHITE);
+		DrawTextureRec(playerTexture, src, { static_cast<float>(player->i_), static_cast<float>(player->j_)}, WHITE);
 	}
 	else {
-		drawTile(player->i_, player->j_, 4, 0, WHITE);
+		DrawTextureRec(playerTexture, src, { static_cast<float>(player->i_), static_cast<float>(player->j_) }, WHITE);
 	}
 
 
 	EndMode2D();
 
-	DrawRectangle(5, 5, 330, 120, Fade(SKYBLUE, 0.5f));
+	/*DrawRectangle(5, 5, 330, 120, Fade(SKYBLUE, 0.5f));
 	DrawRectangleLines(5, 5, 330, 120, BLUE);
 	DrawText(TextFormat("Camera Target: (%6.2f, %6.2f)", (camera.target.x / TILE_SIZE), (camera.target.y / TILE_SIZE)), 15, 10, 19, YELLOW);
 	DrawText(TextFormat("Camera Zoom: %06.2f", camera.zoom), 15, 30, 19, YELLOW);
@@ -147,7 +170,7 @@ void Game::gameRender() {
 	}
 	else {
 		DrawText("Interact Target: ", 15, 50, 19, YELLOW);
-	}
+	}*/
 
 }
 

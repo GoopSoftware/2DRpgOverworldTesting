@@ -19,7 +19,7 @@ int main() {
 		game.gameUpdate();
 
 		BeginDrawing();
-		ClearBackground(GRAY);
+		ClearBackground(BLACK);
 		game.gameRender();
 		EndDrawing();
 	

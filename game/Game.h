@@ -26,6 +26,14 @@ struct Timer {
 	bool isActive;
 };
 
+struct FloatingText {
+	std::string text;
+	float x;
+	float y;
+	float lifetime;
+	float elapsed;
+	bool active;
+};
 
 class Game
 {
@@ -38,13 +46,22 @@ public:
 	void gameShutdown();
 	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y, Color color);
 
+	/*void updateSprite();
+	void drawSprite();*/
+
 	void startTimer(Timer* timer, double lifetime);
 	bool isTimerDone(Timer timer);
 	double getElapsed(Timer timer);
 
-	static constexpr int TILE_SIZE = 8;
+
+	// Timer struct code
+	// TODO move into its own system
+
 
 private:
+
+	Texture2D overWorld;
+
 
 	LevelManager* levelManager;
 	LevelRenderer* levelRenderer = nullptr;
@@ -64,5 +81,19 @@ private:
 	Timer combatTextTimer;
 
 	TargetSystem* targetSystem = nullptr;
+
+	
+	// Timer struct code
+	// TODO move into its own system
+	std::vector<FloatingText> floatingTexts;
+
+	// Sprite animation code
+	// TODO move into its own system
+	Texture2D playerTexture;
+	int frame = 0;
+	float timer = 0.0f;
+	float speed = 0.1f;
+	int frameWidth = playerTexture.width / 6;
+
 
 };
