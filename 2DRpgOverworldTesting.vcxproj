@@ -131,7 +131,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="commands\Command.cpp" />
     <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="input\InputHandler.cpp" />
     <ClCompile Include="interaction\InteractionSystem.cpp" />

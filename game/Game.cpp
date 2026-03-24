@@ -246,9 +246,7 @@ void Game::updateFloatingText(float deltaTime) {
 
 void Game::renderFloatingText() {
 	for (const auto& floatingText : floatingTexts) {
-		//DrawText(floatingText.text.c_str(), static_cast<int>(floatingText.x), static_cast<int>(floatingText.y), 1, YELLOW);
 		DrawTextEx(GetFontDefault(), floatingText.text.c_str(), Vector2(floatingText.x + 1.5f, floatingText.y), 5.f, 1.f, YELLOW);
-		//DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint);
 	}
 
 }
@@ -256,7 +254,7 @@ void Game::renderFloatingText() {
 void Game::handleCommandResult(Command* command) {
 
 	// Derived* ptr = dynamic_cast<Derived*>(basePtr);
-	// Convert base class to a derived class. In this case we used polymorphism for all Commands
+	// Convert base class to a derived class
 	// For this case we need to turn that basic Command into a CombatCommand
 	CombatCommand* combatCommand = dynamic_cast<CombatCommand*>(command);
 	if (combatCommand) {
