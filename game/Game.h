@@ -81,7 +81,7 @@ private:
 
 	TargetSystem* targetSystem = nullptr;
 	
-	void handleCommandResult(Command* command);
+	void handleCombatCommandResult(Command* command);
 
 	// Timer struct code
 	// TODO move into its own system

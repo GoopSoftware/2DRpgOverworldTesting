@@ -131,6 +131,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="interaction\AI\EnemyAI.cpp" />
+    <ClCompile Include="interaction\AI\EnemyStateMachine.cpp" />
     <ClCompile Include="game\Game.cpp" />
     <ClCompile Include="input\InputHandler.cpp" />
     <ClCompile Include="interaction\InteractionSystem.cpp" />
@@ -139,7 +141,6 @@
     <ClCompile Include="level\LevelManager.cpp" />
     <ClCompile Include="rendering\LevelRenderer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="commands\SwitchTargetCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="combat\Combat.h" />
@@ -147,6 +148,8 @@
     <ClInclude Include="commands\Command.h" />
     <ClInclude Include="commands\MoveCommand.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="interaction\AI\EnemyAI.h" />
+    <ClInclude Include="interaction\AI\EnemyStateMachine.h" />
     <ClInclude Include="entities\DungeonDoor.h" />
     <ClInclude Include="entities\Enemy.h" />
     <ClInclude Include="entities\Entity.h" />

@@ -2,6 +2,14 @@
 
 #include "../entities/Entity.h"
 
+enum State {
+	STATE_IDLE,
+	STATE_WALK,
+	STATE_RUN,
+	STATE_ATTACK,
+	STATE_DEAD
+};
+
 class Enemy : public Entity
 {
 
@@ -18,10 +26,12 @@ public:
 	}
 
 	virtual Enemy* clone() = 0;
+	
+	State state_ = STATE_IDLE;
+
 
 private:
 
-	
 
 };
 

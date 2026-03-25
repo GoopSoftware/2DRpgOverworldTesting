@@ -5,51 +5,43 @@ void LevelManager::initializeOverWorld() {
 }
 
 void LevelManager::enterOverWorld() {
-		currentLevel_ = &overWorldLevel_;
+	currentLevel_ = &overWorldLevel_;
 }
 
 void LevelManager::enterWorld() {
-	if (!worldLevel_ && !dungeonLevel_) {
+	// TODO break up this method into helpers
+	if (!worldLevel_) {
 		worldLevel_ = new Level();
-		dungeonLevel_ = new Level();
 
 		levelGenerator_.generateWorld(*worldLevel_);
-		levelGenerator_.generateDungeon(*dungeonLevel_);
 
 		std::vector<SpawnPoint> worldEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_WORLD);
-		std::vector<SpawnPoint> dungeonEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_DUNGEON);
 		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10);
-
 		Spawner spawner(orcPrototype);
+
 		for (SpawnPoint& spawn : worldEnemyPositions) {
 			worldEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_WORLD));
 		}
 
-		for (SpawnPoint& spawn : dungeonEnemyPositions) {
-			dungeonEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_DUNGEON));
-		}
-
-		for (Enemy* e : worldEnemies) {
-			// Make sure they are spawning in pos alive
-			std::cout << e->i_ / 8 << e->j_ / 8 << e->isAlive_ << std::endl;
-		}
-		
-		for (Enemy* e : dungeonEnemies) {
-			// Make sure they are spawning in pos alive
-			std::cout << e->i_ / 8 << e->j_ / 8 << e->isAlive_ << std::endl;
-		}
-
-		spawnDungeonDoor();
+		//spawnDungeonDoor();
 	}
-
 	currentLevel_ = worldLevel_;
-	
 }
 
 void LevelManager::enterDungeon() {
-	if (dungeonLevel_) {
-		currentLevel_ = dungeonLevel_;
+	if (!dungeonLevel_) {
+		dungeonLevel_ = new Level();
+
+		levelGenerator_.generateDungeon(*dungeonLevel_);
+		std::vector<SpawnPoint> dungeonEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_DUNGEON);
+		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10);
+		Spawner spawner(orcPrototype);
+
+		for (SpawnPoint& spawn : dungeonEnemyPositions) {
+			dungeonEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_DUNGEON));
+		}
 	}
+	currentLevel_ = dungeonLevel_;
 }
 
 void LevelManager::exitToOverWorld() {
@@ -70,13 +62,11 @@ Level* LevelManager::getCurrentLevel() {
 	return currentLevel_;
 }
 
-Level* LevelManager::getWorldLevel()
-{
+Level* LevelManager::getWorldLevel() {
 	return worldLevel_;
 }
 
-Level* LevelManager::getDungeonLevel()
-{
+Level* LevelManager::getDungeonLevel() {
 	return dungeonLevel_;
 }
 

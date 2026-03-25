@@ -18,6 +18,8 @@ enum InteractionType {
 	INTERACT_EXIT_TO_OVERWORLD,
 };
 
+
+
 class Entity
 {
 
@@ -45,15 +47,12 @@ public:
 	const char* debugName_ = "Entity";
 	InteractionType interactionType_ = INTERACT_NONE;
 
-	int health_;
+	int health_ = 100;
+	int attackPower_ = 10;
+	int defense_ = 10;
 
-	// damage_ is important! The combat class changes this variable when it calculates damage
-	// Use this variable to display damage over the enemies head
-	int damage_ = 0;
-	
-	int attackPower_ = 0;
-	int defense_ = 0;
 
+	int damage_ = 10;
 
 private:
 

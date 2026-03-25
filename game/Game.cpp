@@ -68,12 +68,10 @@ void Game::gameUpdate() {
 
 	// This is not a memory leak, handleInput() returns a nullptr if no command
 	Command* command = InputHandler::handleInput(player, interactTarget, interactionSystem, targetSystem);
-
-
 	if (command) {
 		command->execute();
 
-		handleCommandResult(command);
+		handleCombatCommandResult(command);
 
 		delete command;
 		command = nullptr;
@@ -251,17 +249,21 @@ void Game::renderFloatingText() {
 
 }
 
-void Game::handleCommandResult(Command* command) {
+void Game::handleCombatCommandResult(Command* command) {
+	// I dont like this code but it works. I think this should be inside combatcommand
+	// I cant figure out what should own what right now though and it works so TODO
+	// It does not take all commands and convert to a combat command instead it checks
+	// if (command == CombatCommand) treat it as one
+	// else return nullptr
 
-	// Derived* ptr = dynamic_cast<Derived*>(basePtr);
+	// Derived* ptr = dynamic_cast<Derived*>(basePtr); 
 	// Convert base class to a derived class
 	// For this case we need to turn that basic Command into a CombatCommand
 	CombatCommand* combatCommand = dynamic_cast<CombatCommand*>(command);
 	if (combatCommand) {
-		PlaySound(hitSound);
 		CombatResult result = combatCommand->getCombatResult();
-
 		if (result.successfulHit && result.target) {
+			PlaySound(hitSound);
 			spawnFloatingText(
 				std::to_string(result.damage),
 				static_cast<float>(result.target->i_),
