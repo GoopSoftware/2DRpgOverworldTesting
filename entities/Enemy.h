@@ -13,9 +13,9 @@ enum State {
 enum EnemyType {
 	BASIC,
 	MELEE,
-	MAGE,
 	RANGE,
-	DEFENCE
+	DEFENCE,
+	MAGE,
 	//SPECIAL1
 	//SPECIAL2
 };

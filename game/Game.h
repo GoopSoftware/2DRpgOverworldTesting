@@ -45,6 +45,7 @@ public:
 	void gameRender();
 	void gameShutdown();
 	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y, Color color);
+	void renderActor(Texture2D texture, int posX, int posY, int animationFrames, Color color);
 
 	// Timer struct code
 	// TODO move into its own system
@@ -99,5 +100,7 @@ private:
 	// Enemy Sprites
 	Texture2D orcBowTexture;
 	Texture2D orcShieldTexture;
-	Texture2D orbSwordTexture;
+	Texture2D orcSwordTexture;
+
+	void renderLevelEnemies(std::vector<Enemy*> enemyVector);
 };

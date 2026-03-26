@@ -11,7 +11,7 @@ void Game::gameStartup() {
 	playerTexture = LoadTexture("assets/Sprite1.png");
 	orcBowTexture = LoadTexture("assets/orcbow.png");
 	orcShieldTexture = LoadTexture("assets/orcshield.png");
-	orbSwordTexture = LoadTexture("assets/orcsword.png");
+	orcSwordTexture = LoadTexture("assets/orcsword.png");
 	
 	Image image = LoadImage("assets/tilePack.png");
 	
@@ -109,7 +109,47 @@ void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y
 	DrawTexturePro(textures[TEXTURE_TILEMAP], source, dest, origin, 0.0f, color);
 }
 
+void Game::renderActor(Texture2D texture, int posX, int posY, int animationFrames, Color color) {
 
+	int frameWidth = texture.width / animationFrames;
+
+	Rectangle src = {
+		static_cast<float>(frame * frameWidth),
+		0,
+		static_cast<float>(frameWidth),
+		static_cast<float>(texture.height)
+	};
+
+	DrawTextureRec(texture, src, { static_cast<float>(posX), static_cast<float>(posY) }, color);
+}
+
+void Game::renderLevelEnemies(std::vector<Enemy*> enemyVector) {
+	for (Enemy* enemy : enemyVector) {
+		if (enemy->zone_ != player->zone_ || !enemy->isAlive_) {
+			continue;
+		}
+
+		Texture2D texture = orcSwordTexture;
+
+		if (enemy->enemyType_ == 0) {
+			texture = orcSwordTexture;
+		}
+		else if (enemy->enemyType_ == 1) {
+			texture = orcSwordTexture;
+		}
+		else if (enemy->enemyType_ == 2) {
+			texture = orcBowTexture;
+		}
+		else if (enemy->enemyType_ == 3) {
+			texture = orcShieldTexture;
+		}
+		else if (enemy->enemyType_ == 4) {
+			texture = orcShieldTexture;
+		}
+
+		renderActor(texture, static_cast<float>(enemy->i_), static_cast<float>(enemy->j_), 6, WHITE);
+	}
+}
 
 void Game::gameRender() {
 
@@ -126,38 +166,19 @@ void Game::gameRender() {
 	}
 
 
-	// spawner rendering
-	for (Enemy* enemy : levelManager->worldEnemies) {
-		if (enemy->zone_ == player->zone_ && enemy->isAlive_) {
-			drawTile(enemy->i_, enemy->j_, 11, 0, WHITE);
-		}
-	}
+	// enemy rendering
+	renderLevelEnemies(levelManager->worldEnemies);
+	renderLevelEnemies(levelManager->dungeonEnemies);
 
-	// spawner rendering
-	for (Enemy* enemy : levelManager->dungeonEnemies) {
-		if (enemy->zone_ == player->zone_ && enemy->isAlive_) {
-			drawTile(enemy->i_, enemy->j_, 11, 0, WHITE);
-		}
-	}
 
 	renderFloatingText();
 
-	// Render Player
-	int frameWidth = playerTexture.width / 6;
-
-	Rectangle src = {
-		static_cast<float>(frame * frameWidth),
-		0,
-		static_cast<float>(frameWidth),
-		static_cast<float>(playerTexture.height)
-	};
-
 	if (player->zone_ == ZONE_OVERWORLD) {
 		DrawTextureEx(overWorld, Vector2(0.f, 0.f), 0.f, 1.f, WHITE);
-		DrawTextureRec(playerTexture, src, { static_cast<float>(player->i_), static_cast<float>(player->j_)}, WHITE);
+		renderActor(playerTexture, static_cast<float>(player->i_), static_cast<float>(player->j_), 6, WHITE);
 	}
 	else {
-		DrawTextureRec(playerTexture, src, { static_cast<float>(player->i_), static_cast<float>(player->j_) }, WHITE);
+		renderActor(playerTexture, static_cast<float>(player->i_), static_cast<float>(player->j_), 6, WHITE);
 	}
 
 	// highlight current target

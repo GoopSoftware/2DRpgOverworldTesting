@@ -43,8 +43,13 @@ void LevelManager::enterDungeon() {
 
 		for (SpawnPoint& spawn : dungeonEnemyPositions) {
 			int enemyType = GetRandomValue(0, 4);
-			worldEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_WORLD, enemyType));
+			dungeonEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_DUNGEON, enemyType));
 		}
+
+		for (Enemy* orc : dungeonEnemies) {
+			std::cout << orc->enemyType_;
+		}
+
 	}
 	currentLevel_ = dungeonLevel_;
 }
