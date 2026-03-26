@@ -1,128 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{1788838d-0a3b-4d3f-be3e-10e08730dc0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets">
-      <UniqueIdentifier>{63cd1e0e-eac4-48ab-bfd9-0ba5bd74f0a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\core">
-      <UniqueIdentifier>{6258c946-c882-41b3-b664-23c2eb796e30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\scenes">
-      <UniqueIdentifier>{da667d67-667d-41ac-b87c-f26932b2f551}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\entities">
-      <UniqueIdentifier>{4a927965-6fbf-44d0-af1a-01882bf5c752}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\world">
-      <UniqueIdentifier>{b5c7b0e1-f9de-485c-a988-d9eb332bd143}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\systems">
-      <UniqueIdentifier>{8e389513-5f7a-4647-9bee-3a55793cb8a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\rendering">
-      <UniqueIdentifier>{de7ef467-2e74-40ba-9493-a3c2d615b8eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\ui">
-      <UniqueIdentifier>{c09ee897-8504-4397-a7fb-997e5a6d4b89}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="interaction\AI\EnemyAI.cpp" />
+    <ClCompile Include="interaction\AI\EnemyStateMachine.cpp" />
+    <ClCompile Include="game\Game.cpp" />
+    <ClCompile Include="input\InputHandler.cpp" />
+    <ClCompile Include="interaction\InteractionSystem.cpp" />
+    <ClCompile Include="interaction\TargetSystem.cpp" />
+    <ClCompile Include="level\LevelGenerator.cpp" />
+    <ClCompile Include="level\LevelManager.cpp" />
+    <ClCompile Include="rendering\LevelRenderer.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="InputHandler.h.cpp" />
-=======
-    <ClCompile Include="LevelRenderer.cpp">
-      <Filter>src\world</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelGenerator.cpp">
-      <Filter>src\world</Filter>
-    </ClCompile>
-    <ClCompile Include="InputHandler.h.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="Orc.cpp">
-      <Filter>src\entities</Filter>
-    </ClCompile>
->>>>>>> 4509697d9dad2047e934b9501a06821bcbe52e7e
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>src\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>src\entities</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="DungeonDoor.h" />
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InteractCommand.h" />
-    <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="combat\Combat.h" />
+    <ClInclude Include="commands\CombatCommand.h" />
+    <ClInclude Include="commands\Command.h" />
+    <ClInclude Include="commands\MoveCommand.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="interaction\AI\EnemyAI.h" />
+    <ClInclude Include="interaction\AI\EnemyStateMachine.h" />
+    <ClInclude Include="entities\DungeonDoor.h" />
+    <ClInclude Include="entities\Enemy.h" />
+    <ClInclude Include="entities\Entity.h" />
+    <ClInclude Include="entities\Orc.h" />
+    <ClInclude Include="entities\Player.h" />
+    <ClInclude Include="game\Game.h" />
+    <ClInclude Include="input\InputHandler.h" />
+    <ClInclude Include="commands\InteractCommand.h" />
+    <ClInclude Include="interaction\InteractionSystem.h" />
+    <ClInclude Include="interaction\TargetSystem.h" />
+    <ClInclude Include="level\Level.h" />
+    <ClInclude Include="level\LevelGenerator.h" />
+    <ClInclude Include="level\LevelManager.h" />
+    <ClInclude Include="rendering\LevelRenderer.h" />
+    <ClInclude Include="spawning\Spawner.h" />
+    <ClInclude Include="commands\SwitchTargetCommand.h" />
     <ClInclude Include="Weapon.h" />
-    <ClInclude Include="Spawner.h">
-      <Filter>src\entities</Filter>
-    </ClInclude>
-=======
-    <ClInclude Include="Weapon.h" />
-    <ClInclude Include="Enemy.h">
-      <Filter>src\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Combat.h">
-      <Filter>src\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveCommand.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="InteractCommand.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="DungeonDoor.h">
-      <Filter>src\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>src\world</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelGenerator.h">
-      <Filter>src\world</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelRenderer.h">
-      <Filter>src\world</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Spawner.h">
-      <Filter>src\systems</Filter>
-    </ClInclude>
-    <ClInclude Include="CombatCommand.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="Orc.h">
-      <Filter>src\entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Constants.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
->>>>>>> 4509697d9dad2047e934b9501a06821bcbe52e7e
+    <ClInclude Include="WorldExit.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\..\Downloads\kenney_micro-roguelike\Tilemap\colored_tilemap_packed.png">
-      <Filter>assets</Filter>
-    </Image>
+    <Image Include="..\..\..\..\Downloads\kenney_micro-roguelike\Tilemap\colored_tilemap_packed.png" />
+    <Image Include="assets\colored_tilemap_packed.png" />
+    <Image Include="assets\tilePack.png" />
+    <Image Include="assets\Overworld.png" />
+    <Image Include="assets\Sprite1.png" />
+    <Image Include="assets\colored_tilemap_packed - Copy.png" />
+    <Image Include="assets\colored_tilemap_packed - Copy-export.png" />
+    <Image Include="assets\orcbow.png" />
+    <Image Include="assets\orcshield.png" />
+    <Image Include="assets\orcsword.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\hitHurt.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Overworld.tmx" />
+    <None Include="assets\Sprite1.aseprite" />
   </ItemGroup>
 </Project>

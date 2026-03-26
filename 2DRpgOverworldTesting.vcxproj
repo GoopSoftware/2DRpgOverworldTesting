@@ -171,7 +171,22 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Downloads\kenney_micro-roguelike\Tilemap\colored_tilemap_packed.png" />
+    <Image Include="assets\colored_tilemap_packed - Copy-export.png" />
+    <Image Include="assets\colored_tilemap_packed - Copy.png" />
     <Image Include="assets\colored_tilemap_packed.png" />
+    <Image Include="assets\orcbow.png" />
+    <Image Include="assets\orcshield.png" />
+    <Image Include="assets\orcsword.png" />
+    <Image Include="assets\Overworld.png" />
+    <Image Include="assets\Sprite1.png" />
+    <Image Include="assets\tilePack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\hitHurt.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Overworld.tmx" />
+    <None Include="assets\Sprite1.aseprite" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

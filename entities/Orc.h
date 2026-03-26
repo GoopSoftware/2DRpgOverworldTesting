@@ -2,17 +2,20 @@
 
 #include "../entities/Enemy.h"
 
+
+
 class Orc : public Enemy
 {
 
 public:
 
-	Orc(int i, int j, Zone zone, int health, int attackPower, int defense) 
+	Orc(int i, int j, Zone zone, int health, int attackPower, int defense, int enemyType) 
 		: Enemy(i, j, zone, health)
 	{
 		debugName_ = "Orc";
 		attackPower_ = attackPower;
 		defense_ = defense;
+		enemyType_ = static_cast<EnemyType>(enemyType);
 	}
 
 	Enemy* clone() override {
@@ -21,7 +24,6 @@ public:
 
 
 private:
-
 
 
 };

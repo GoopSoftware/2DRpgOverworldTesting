@@ -9,6 +9,9 @@ void Game::gameStartup() {
 
 	overWorld = LoadTexture("assets/Overworld.png");
 	playerTexture = LoadTexture("assets/Sprite1.png");
+	orcBowTexture = LoadTexture("assets/orcbow.png");
+	orcShieldTexture = LoadTexture("assets/orcshield.png");
+	orbSwordTexture = LoadTexture("assets/orcsword.png");
 	
 	Image image = LoadImage("assets/tilePack.png");
 	

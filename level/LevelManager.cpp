@@ -16,13 +16,17 @@ void LevelManager::enterWorld() {
 		levelGenerator_.generateWorld(*worldLevel_);
 
 		std::vector<SpawnPoint> worldEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_WORLD);
-		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10);
+		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10, 0);
 		Spawner spawner(orcPrototype);
 
 		for (SpawnPoint& spawn : worldEnemyPositions) {
-			worldEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_WORLD));
+			int enemyType = GetRandomValue(0, 4);
+			worldEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_WORLD, enemyType));
 		}
 
+		for (Enemy* orc : worldEnemies) {
+			std::cout << orc->enemyType_;
+		}
 		//spawnDungeonDoor();
 	}
 	currentLevel_ = worldLevel_;
@@ -34,11 +38,12 @@ void LevelManager::enterDungeon() {
 
 		levelGenerator_.generateDungeon(*dungeonLevel_);
 		std::vector<SpawnPoint> dungeonEnemyPositions = levelGenerator_.generateMonsterSpawns(10, ZONE_DUNGEON);
-		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10);
+		Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10, 0);
 		Spawner spawner(orcPrototype);
 
 		for (SpawnPoint& spawn : dungeonEnemyPositions) {
-			dungeonEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_DUNGEON));
+			int enemyType = GetRandomValue(0, 4);
+			worldEnemies.push_back(spawner.spawnEnemy(spawn.i, spawn.j, ZONE_WORLD, enemyType));
 		}
 	}
 	currentLevel_ = dungeonLevel_;

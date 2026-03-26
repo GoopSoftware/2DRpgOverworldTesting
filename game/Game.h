@@ -56,11 +56,8 @@ public:
 
 private:
 	Sound hitSound;
-	
-	
 		
 	Texture2D overWorld;
-
 
 	LevelManager* levelManager;
 	LevelRenderer* levelRenderer = nullptr;
@@ -97,4 +94,10 @@ private:
 
 	bool debugWindow = false;
 	void renderDebugWindow();
+
+
+	// Enemy Sprites
+	Texture2D orcBowTexture;
+	Texture2D orcShieldTexture;
+	Texture2D orbSwordTexture;
 };

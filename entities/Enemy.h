@@ -10,6 +10,16 @@ enum State {
 	STATE_DEAD
 };
 
+enum EnemyType {
+	BASIC,
+	MELEE,
+	MAGE,
+	RANGE,
+	DEFENCE
+	//SPECIAL1
+	//SPECIAL2
+};
+
 class Enemy : public Entity
 {
 
@@ -28,6 +38,7 @@ public:
 	virtual Enemy* clone() = 0;
 	
 	State state_ = STATE_IDLE;
+	EnemyType enemyType_;
 
 
 private:
