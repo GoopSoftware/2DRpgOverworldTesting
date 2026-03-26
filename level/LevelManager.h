@@ -51,8 +51,11 @@ public:
 	void initializeOverWorld();
 
 	void enterOverWorld();
+	void initializeWorld();
 	void enterWorld();
+	void initializeDungeon();
 	void enterDungeon();
+	void spawnEnemiesForZone(std::vector<Enemy*>& enemyContainer, Zone zone);
 	void exitToOverWorld();
 
 	Level* getCurrentLevel();
@@ -61,7 +64,6 @@ public:
 
 	void spawnDungeonDoor();
 	void spawnEnemies();
-
 
 	std::vector<Enemy*> worldEnemies;
 	std::vector<Enemy*> dungeonEnemies;

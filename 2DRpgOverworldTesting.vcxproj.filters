@@ -50,6 +50,9 @@
     <Image Include="assets\orcbow.png" />
     <Image Include="assets\orcshield.png" />
     <Image Include="assets\orcsword.png" />
+    <Image Include="assets\orcbasic.png" />
+    <Image Include="assets\colored_tilemap_packed_transparent.png" />
+    <Image Include="assets\orcmage.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\hitHurt.wav" />

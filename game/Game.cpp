@@ -9,9 +9,11 @@ void Game::gameStartup() {
 
 	overWorld = LoadTexture("assets/Overworld.png");
 	playerTexture = LoadTexture("assets/Sprite1.png");
+	orcBasicTexture = LoadTexture("assets/orcbasic.png");
 	orcBowTexture = LoadTexture("assets/orcbow.png");
 	orcShieldTexture = LoadTexture("assets/orcshield.png");
 	orcSwordTexture = LoadTexture("assets/orcsword.png");
+	orcMageTexture = LoadTexture("assets/orcmage.png");
 	
 	Image image = LoadImage("assets/tilePack.png");
 	
@@ -48,7 +50,6 @@ void Game::gameUpdate() {
 		timer = 0;
 		frame = (frame + 1) % 6;
 	}
-
 
 	if (IsKeyPressed(KEY_Y)) {
 		player->zone_ = ZONE_OVERWORLD;
@@ -94,20 +95,6 @@ void Game::gameUpdate() {
 
 }
 
-void Game::drawTile(int posX, int posY, int texture_index_x, int texture_index_y, Color color) {
-
-	Rectangle source = { static_cast<float>(texture_index_x * TILE_SIZE),
-								 static_cast<float>(texture_index_y * TILE_SIZE),
-								 static_cast<float>(TILE_SIZE),
-								 static_cast<float>(TILE_SIZE) };
-	Rectangle dest = { static_cast<float>(posX),
-							 static_cast<float>(posY),
-							 static_cast<float>(TILE_SIZE),
-							 static_cast<float>(TILE_SIZE) };
-	Vector2 origin = { 0, 0 };
-
-	DrawTexturePro(textures[TEXTURE_TILEMAP], source, dest, origin, 0.0f, color);
-}
 
 void Game::renderActor(Texture2D texture, int posX, int posY, int animationFrames, Color color) {
 
@@ -132,7 +119,7 @@ void Game::renderLevelEnemies(std::vector<Enemy*> enemyVector) {
 		Texture2D texture = orcSwordTexture;
 
 		if (enemy->enemyType_ == 0) {
-			texture = orcSwordTexture;
+			texture = orcBasicTexture;
 		}
 		else if (enemy->enemyType_ == 1) {
 			texture = orcSwordTexture;
@@ -144,7 +131,7 @@ void Game::renderLevelEnemies(std::vector<Enemy*> enemyVector) {
 			texture = orcShieldTexture;
 		}
 		else if (enemy->enemyType_ == 4) {
-			texture = orcShieldTexture;
+			texture = orcMageTexture;
 		}
 
 		renderActor(texture, static_cast<float>(enemy->i_), static_cast<float>(enemy->j_), 6, WHITE);
@@ -160,11 +147,9 @@ void Game::gameRender() {
 		levelRenderer->renderLevel(*currentLevel);
 	}
 	
-	
-	if (levelManager->dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
-		drawTile(levelManager->dungeonGate->i_, levelManager->dungeonGate->j_, 8, 9, WHITE);
-	}
-
+	//if (levelManager->dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
+	//	drawTile(levelManager->dungeonGate->i_, levelManager->dungeonGate->j_, 8, 9, WHITE);
+	//}
 
 	// enemy rendering
 	renderLevelEnemies(levelManager->worldEnemies);
@@ -274,12 +259,6 @@ void Game::renderFloatingText() {
 }
 
 void Game::handleCombatCommandResult(Command* command) {
-	// I dont like this code but it works. I think this should be inside combatcommand
-	// I cant figure out what should own what right now though and it works so TODO
-	// It does not take all commands and convert to a combat command instead it checks
-	// if (command == CombatCommand) treat it as one
-	// else return nullptr
-
 	// Derived* ptr = dynamic_cast<Derived*>(basePtr); 
 	// Convert base class to a derived class
 	// For this case we need to turn that basic Command into a CombatCommand
