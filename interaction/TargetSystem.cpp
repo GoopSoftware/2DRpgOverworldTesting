@@ -89,25 +89,25 @@ void TargetSystem::update(Player* player, LevelManager* levelManager) {
 
 void TargetSystem::buildCandidates(Player* player, LevelManager* levelManager) {
 	candidates.clear();
-	for (Entity* entity : levelManager->zoneAllEntities) {
+	for (Entity* entity : levelManager->zoneAllEntities_) {
 		candidates.push_back(entity);
 	}
 
 	if (player->zone_ == ZONE_WORLD) {
 
-		for (Enemy* enemy : levelManager->worldEnemies) {
+		for (Enemy* enemy : levelManager->worldEnemies_) {
 			candidates.push_back(enemy);
 		}
-		for (Entity* entity : levelManager->worldEntities) {
+		for (Entity* entity : levelManager->worldEntities_) {
 			candidates.push_back(entity);
 		}
 	}
 
 	if (player->zone_ == ZONE_DUNGEON) {
-		for (Enemy* enemy : levelManager->dungeonEnemies) {
+		for (Enemy* enemy : levelManager->dungeonEnemies_) {
 			candidates.push_back(enemy);
 		}
-		for (Entity* entity : levelManager->dungeonEntities) {
+		for (Entity* entity : levelManager->dungeonEntities_) {
 			candidates.push_back(entity);
 		}
 

@@ -40,6 +40,8 @@ public:
 	State state_ = STATE_IDLE;
 	EnemyType enemyType_;
 
+	float deathTimer_ = 0.0f;
+	bool readyForRemoval_ = false;
 
 private:
 

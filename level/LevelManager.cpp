@@ -9,9 +9,15 @@ void LevelManager::enterOverWorld() {
 }
 
 void LevelManager::initializeWorld() {
+	if (worldLevel_) return;
+
 	worldLevel_ = new Level();
 	levelGenerator_.generateWorld(*worldLevel_);
-	spawnEnemiesForZone(dungeonEnemies, ZONE_WORLD);
+	spawnEnemiesForZone(worldEnemies_, ZONE_WORLD);
+
+	delete worldESM_;
+	worldESM_ = new EnemyStateMachine(worldEnemies_, deltaTime_);
+
 }
 
 void LevelManager::enterWorld() {
@@ -22,9 +28,14 @@ void LevelManager::enterWorld() {
 }
 
 void LevelManager::initializeDungeon() {
+	if (dungeonLevel_) return;
+
 	dungeonLevel_ = new Level();
 	levelGenerator_.generateDungeon(*dungeonLevel_);
-	spawnEnemiesForZone(dungeonEnemies, ZONE_DUNGEON);
+	spawnEnemiesForZone(dungeonEnemies_, ZONE_DUNGEON);
+
+	delete dungeonESM_;
+	dungeonESM_ = new EnemyStateMachine(dungeonEnemies_, deltaTime_);
 }
 
 void LevelManager::enterDungeon() {
@@ -33,6 +44,8 @@ void LevelManager::enterDungeon() {
 	}
 	currentLevel_ = dungeonLevel_;
 }
+
+
 
 void LevelManager::spawnEnemiesForZone( std::vector<Enemy*>& enemyContainer, Zone zone) {
 	// TODO Expand this to take any enemy type for now its hardcoded orc
@@ -52,15 +65,31 @@ void LevelManager::spawnEnemiesForZone( std::vector<Enemy*>& enemyContainer, Zon
 
 void LevelManager::exitToOverWorld() {
 
-	if (worldLevel_ && dungeonLevel_) {
+	if (worldLevel_) {
+		worldEnemies_.clear();
 		delete worldLevel_;
-		delete dungeonLevel_;
-
 		worldLevel_ = nullptr;
+	}
+	if (dungeonLevel_) {
+		dungeonEnemies_.clear();
+		delete dungeonLevel_;
 		dungeonLevel_ = nullptr;
 	}
 
 	currentLevel_ = &overWorldLevel_;
+}
+
+void LevelManager::removeDeadEnemies(std::vector<Enemy*>& enemies) {
+	for (auto it = enemies.begin(); it != enemies.end(); ) {
+		if ((*it)->readyForRemoval_) {
+			std::cout << "Enemy: " << *it << " deleted" << std::endl;
+			delete *it;
+			it = enemies.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
 }
 
 
@@ -78,9 +107,24 @@ Level* LevelManager::getDungeonLevel() {
 
 void LevelManager::spawnDungeonDoor() {
 	dungeonGate = new DungeonDoor(10, 10, ZONE_WORLD_AND_DUNGEON);
-	zoneAllEntities.push_back(dungeonGate);
+	zoneAllEntities_.push_back(dungeonGate);
 }
 
-void LevelManager::spawnEnemies() {
+void LevelManager::updateEnemyStateMachines() {
 
+	if (currentLevel_ == worldLevel_ && worldESM_) {
+		worldESM_->deltaTime_ = deltaTime_;
+		worldESM_->update();
+		removeDeadEnemies(worldEnemies_);
+	}
+
+	if (currentLevel_ == dungeonLevel_ && dungeonESM_) {
+		dungeonESM_->deltaTime_ = deltaTime_;
+		dungeonESM_->update();
+		removeDeadEnemies(dungeonEnemies_);
+	}
+}
+
+void LevelManager::updateDeltaTime(float deltaTime) {
+	deltaTime_ = deltaTime;
 }

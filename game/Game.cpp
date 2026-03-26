@@ -20,7 +20,7 @@ void Game::gameStartup() {
 	textures[TEXTURE_TILEMAP] = LoadTextureFromImage(image);
 	UnloadImage(image);
 
-	levelManager = new LevelManager();
+	levelManager = new LevelManager(deltaTime);
 	levelManager->initializeOverWorld();
 	levelManager->enterOverWorld();
 
@@ -43,12 +43,17 @@ void Game::gameUpdate() {
 
 	deltaTime = GetFrameTime();
 	updateFloatingText(deltaTime);
-
+	
 	// player animation
 	timer += GetFrameTime();
 	if (timer >= speed) {
 		timer = 0;
 		frame = (frame + 1) % 6;
+	}
+
+	if (IsKeyPressed(KEY_T)) {
+		player->zone_ = ZONE_OVERWORLD;
+		levelManager->exitToOverWorld();
 	}
 
 	if (IsKeyPressed(KEY_Y)) {
@@ -65,6 +70,9 @@ void Game::gameUpdate() {
 		player->zone_ = ZONE_DUNGEON;
 		levelManager->enterDungeon();
 	}
+
+	levelManager->updateDeltaTime(deltaTime);
+	levelManager->updateEnemyStateMachines();
 
 	targetSystem->update(player, levelManager);
 	interactTarget = targetSystem->getCurrentTarget();
@@ -116,7 +124,7 @@ void Game::renderLevelEnemies(std::vector<Enemy*> enemyVector) {
 			continue;
 		}
 
-		Texture2D texture = orcSwordTexture;
+		Texture2D texture = orcBasicTexture;
 
 		if (enemy->enemyType_ == 0) {
 			texture = orcBasicTexture;
@@ -152,8 +160,8 @@ void Game::gameRender() {
 	//}
 
 	// enemy rendering
-	renderLevelEnemies(levelManager->worldEnemies);
-	renderLevelEnemies(levelManager->dungeonEnemies);
+	renderLevelEnemies(levelManager->worldEnemies_);
+	renderLevelEnemies(levelManager->dungeonEnemies_);
 
 
 	renderFloatingText();
