@@ -48,8 +48,8 @@ std::vector<SpawnPoint> LevelGenerator::generateMonsterSpawns(int monsterCount, 
         const int maxAttempts = 10;
 
         while (attempts < maxAttempts) {
-            int iPos = GetRandomValue(0, 19);
-            int jPos = GetRandomValue(0, 19);
+            int iPos = GetRandomValue(0, (Level::WORLD_WIDTH_ - 1));
+            int jPos = GetRandomValue(0, (Level::WORLD_HEIGHT_ - 1));
             
 
             if (iPos == 10 && jPos == 10) {

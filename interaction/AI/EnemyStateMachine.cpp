@@ -9,7 +9,7 @@ void EnemyStateMachine::update() {
 		switch (enemy->state_) {
 		
 		case STATE_IDLE:
-			enemyAI_.idle(enemy);
+			enemyAI_.idle(enemy, deltaTime_);
 			break;
 		
 		case STATE_WALK:

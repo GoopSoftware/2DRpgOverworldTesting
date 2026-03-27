@@ -5,7 +5,7 @@ class EnemyAI
 {
 public:
 
-	void idle(Enemy* enemy);
+	void idle(Enemy* enemy, float deltaTime);
 	void walk(Enemy* enemy);
 	void run(Enemy* enemy);
 	void attack(Enemy* enemy);

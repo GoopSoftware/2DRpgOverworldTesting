@@ -18,8 +18,8 @@ struct Tile {
 
 class Level {
 public:
-	static constexpr int WORLD_WIDTH_ = 20; // 20 * tileWidth
-	static constexpr int WORLD_HEIGHT_ = 20; // 20 * tileHeight
+	static constexpr int WORLD_WIDTH_ = 10; // 20 * tileWidth
+	static constexpr int WORLD_HEIGHT_ = 10; // 20 * tileHeight
 
 	Tile tiles[WORLD_WIDTH_][WORLD_WIDTH_];
 
