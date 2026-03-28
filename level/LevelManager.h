@@ -73,7 +73,7 @@ public:
 	void enterWorld();
 	void initializeDungeon();
 	void enterDungeon();
-	void spawnEnemiesForZone(std::vector<Enemy*>& enemyContainer, Zone zone);
+	void spawnEnemiesForZone(std::vector<Enemy*>& enemyContainer, Zone zone, Level* level);
 	void exitToOverWorld();
 	
 	void removeDeadEnemies(std::vector<Enemy*>& enemies);
@@ -102,7 +102,7 @@ private:
 
 	LevelGenerator levelGenerator_;
 
-	Level overWorldLevel_;
+	Level overWorldLevel_{ 20, 20 };
 	Level* worldLevel_ = nullptr;
 	Level* dungeonLevel_ = nullptr;
 

@@ -70,8 +70,8 @@ private:
 
 	Texture2D textures[MAX_TEXTURES];
 
-	Level worldLevel;
-	Level dungeonLevel;
+	Level* worldLevel = nullptr;
+	Level* dungeonLevel = nullptr;
 
 	Camera2D camera = { 0 };
 	Timer combatTextTimer;

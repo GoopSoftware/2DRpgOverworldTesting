@@ -11,29 +11,40 @@ void EnemyAI::idle(Enemy* enemy, float deltaTime) {
 	}
 }
 
-void EnemyAI::walk(Enemy* enemy) {
+
+void EnemyAI::walk(Enemy* enemy, int maxX, int maxY) {
 	int direction = GetRandomValue(0, 3);
+
+	int nextI = enemy->i_;
+	int nextJ = enemy->j_;
+
 	if (direction == 0) {
 		// Left
 		std::cout << "Left\n";
-		enemy->i_ -= 8;
+		nextI -= 8;
 	}
 	else if (direction == 1) {
 		// Right
 		std::cout << "Right\n";
-		enemy->i_ += 8;
+		nextI += 8;
 	}
 	else if (direction == 2) {
 		// Up
 		std::cout << "Up\n";
-		enemy->j_ -= 8;
+		nextJ -= 8;
 	}
 	else if (direction == 3) {
 		// Down
 		std::cout << "Down\n";
-		enemy->j_ += 8;
+		nextJ += 8;
 	}
 
+	if (nextI >= 0 && nextI <= (maxX * TILE_SIZE) - TILE_SIZE && nextJ >= 0 && nextJ <= (maxY * TILE_SIZE) - TILE_SIZE) {
+		enemy->i_ = nextI;
+		enemy->j_ = nextJ;
+	}
+
+	
 	// waitTime_ should already be 0 this is backup
 	enemy->waitTime_ = 0;
 	enemy->idleTime_ = GetRandomValue(2, 10);

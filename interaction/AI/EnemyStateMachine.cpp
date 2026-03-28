@@ -13,7 +13,7 @@ void EnemyStateMachine::update(float deltaTime) {
 			break;
 		
 		case STATE_WALK:
-			enemyAI_.walk(enemy);
+			enemyAI_.walk(enemy, mapWidth_, mapHeight_);
 			break;
 			
 		case STATE_RUN:

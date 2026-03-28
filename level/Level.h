@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 
 enum TileType {
 	TILE_TYPE_GRASS,
@@ -15,13 +16,25 @@ struct Tile {
 	int type;
 };
 
+struct worldDimensions{
+	int width;
+	int height;
+};
 
 class Level {
 public:
-	static constexpr int WORLD_WIDTH_ = 10; // 20 * tileWidth
-	static constexpr int WORLD_HEIGHT_ = 10; // 20 * tileHeight
 
-	Tile tiles[WORLD_WIDTH_][WORLD_WIDTH_];
+	Level(int width, int height) : 
+		width_(width), 
+		height_(height),
+		tiles_(height, std::vector<Tile>(width))
+	{
+		
+	}
+
+	int width_ = 20; // 20 * tileWidth
+	int height_ = 20; // 20 * tileHeight
+	std::vector<std::vector<Tile>> tiles_;
 
 private:
 	

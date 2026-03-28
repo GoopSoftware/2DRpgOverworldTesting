@@ -8,8 +8,10 @@
 class EnemyStateMachine {
 public:
 
-	EnemyStateMachine(std::vector<Enemy*>& enemies) :
-	enemies_(enemies)
+	EnemyStateMachine(std::vector<Enemy*>& enemies, int mapWidth, int mapHeight) :
+	enemies_(enemies),
+	mapWidth_(mapWidth),
+	mapHeight_(mapHeight)
 	{
 
 	}
@@ -20,5 +22,9 @@ public:
 private:
 	std::vector<Enemy*>& enemies_;
 	EnemyAI enemyAI_;
+
+	int mapWidth_;
+	int mapHeight_;
+
 };
 
