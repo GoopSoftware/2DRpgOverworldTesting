@@ -42,6 +42,8 @@ public:
 
 	float deathTimer_ = 0.0f;
 	bool readyForRemoval_ = false;
+	float waitTime_ = 0;
+	float idleTime_ = 0;
 
 private:
 

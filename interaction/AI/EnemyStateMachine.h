@@ -8,16 +8,14 @@
 class EnemyStateMachine {
 public:
 
-	EnemyStateMachine(std::vector<Enemy*>& enemies, float& deltaTime) :
-	enemies_(enemies),
-	deltaTime_(deltaTime)
+	EnemyStateMachine(std::vector<Enemy*>& enemies) :
+	enemies_(enemies)
 	{
 
 	}
 
-	void update();
+	void update(float deltaTime);
 	void handleInput(Command* playerInput);
-	float deltaTime_;
 
 private:
 	std::vector<Enemy*>& enemies_;

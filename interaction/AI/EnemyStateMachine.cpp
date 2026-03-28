@@ -1,7 +1,7 @@
 #include "EnemyStateMachine.h"
 #include <iostream>
 
-void EnemyStateMachine::update() {
+void EnemyStateMachine::update(float deltaTime) {
 	for (Enemy* enemy : enemies_) {
 		if (!enemy->isAlive_) {
 			enemy->state_ = STATE_DEAD;
@@ -9,7 +9,7 @@ void EnemyStateMachine::update() {
 		switch (enemy->state_) {
 		
 		case STATE_IDLE:
-			enemyAI_.idle(enemy, deltaTime_);
+			enemyAI_.idle(enemy, deltaTime);
 			break;
 		
 		case STATE_WALK:
@@ -25,13 +25,9 @@ void EnemyStateMachine::update() {
 			break;
 
 		case STATE_DEAD:
-
-			enemyAI_.die(enemy, deltaTime_);
+			enemyAI_.die(enemy, deltaTime);
 			break;
-		
 		}
-
-	
 	}
 }
 

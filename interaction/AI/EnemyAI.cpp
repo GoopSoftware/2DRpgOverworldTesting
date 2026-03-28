@@ -2,17 +2,42 @@
 #include <iostream>
 
 void EnemyAI::idle(Enemy* enemy, float deltaTime) {
-	// define time to stay idle
-	// add deltaTime to idleTimer
-	// when idleTimer >= maxIdleTime
-	// steps = 1-2
-	// state = walk(steps)
+	// Add steps
+	enemy->waitTime_ += deltaTime;
+
+	if (enemy->waitTime_ >= enemy->idleTime_) {
+		enemy->waitTime_ = 0;
+		enemy->state_ = STATE_WALK;
+	}
 }
 
 void EnemyAI::walk(Enemy* enemy) {
-	// Random decide direction
-	// enemy x += or -= steps at # speed
-	// state == idle
+	int direction = GetRandomValue(0, 3);
+	if (direction == 0) {
+		// Left
+		std::cout << "Left\n";
+		enemy->i_ -= 8;
+	}
+	else if (direction == 1) {
+		// Right
+		std::cout << "Right\n";
+		enemy->i_ += 8;
+	}
+	else if (direction == 2) {
+		// Up
+		std::cout << "Up\n";
+		enemy->j_ -= 8;
+	}
+	else if (direction == 3) {
+		// Down
+		std::cout << "Down\n";
+		enemy->j_ += 8;
+	}
+
+	// waitTime_ should already be 0 this is backup
+	enemy->waitTime_ = 0;
+	enemy->idleTime_ = GetRandomValue(2, 10);
+	enemy->state_ = STATE_IDLE;
 }
 
 void EnemyAI::run(Enemy* enemy) {

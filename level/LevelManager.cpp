@@ -16,7 +16,7 @@ void LevelManager::initializeWorld() {
 	spawnEnemiesForZone(worldEnemies_, ZONE_WORLD);
 
 	delete worldESM_;
-	worldESM_ = new EnemyStateMachine(worldEnemies_, deltaTime_);
+	worldESM_ = new EnemyStateMachine(worldEnemies_);
 
 }
 
@@ -35,7 +35,7 @@ void LevelManager::initializeDungeon() {
 	spawnEnemiesForZone(dungeonEnemies_, ZONE_DUNGEON);
 
 	delete dungeonESM_;
-	dungeonESM_ = new EnemyStateMachine(dungeonEnemies_, deltaTime_);
+	dungeonESM_ = new EnemyStateMachine(dungeonEnemies_);
 }
 
 void LevelManager::enterDungeon() {
@@ -113,14 +113,12 @@ void LevelManager::spawnDungeonDoor() {
 void LevelManager::updateEnemyStateMachines() {
 
 	if (currentLevel_ == worldLevel_ && worldESM_) {
-		worldESM_->deltaTime_ = deltaTime_;
-		worldESM_->update();
+		worldESM_->update(deltaTime_);
 		removeDeadEnemies(worldEnemies_);
 	}
 
 	if (currentLevel_ == dungeonLevel_ && dungeonESM_) {
-		dungeonESM_->deltaTime_ = deltaTime_;
-		dungeonESM_->update();
+		dungeonESM_->update(deltaTime_);
 		removeDeadEnemies(dungeonEnemies_);
 	}
 }
