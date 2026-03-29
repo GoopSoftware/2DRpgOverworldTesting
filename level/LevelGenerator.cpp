@@ -2,11 +2,11 @@
 #include "LevelGenerator.h"
 
 void LevelGenerator::generateOverWorld(Level& level) {
-    for (int i = 0; i < level.width_; i++) {
-        for (int j = 0; j < level.height_; j++) {
-            level.tiles_[i][j] = Tile{
-                i,
-                j,
+    for (int y = 0; y < level.height_; y++) {
+        for (int x = 0; x < level.width_; x++) {
+            level.tiles_[y][x] = Tile{
+                x,
+                y,
                 static_cast<TileType>(GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_DIRT))
             };
         }
@@ -14,25 +14,23 @@ void LevelGenerator::generateOverWorld(Level& level) {
 }
 
 void LevelGenerator::generateWorld(Level& level) {
-
-    for (int i = 0; i < level.width_; i++) {
-        for (int j = 0; j < level.height_; j++) {
-            level.tiles_[i][j] = Tile{
-                i,
-                j,
+    for (int y = 0; y < level.height_; y++) {
+        for (int x = 0; x < level.width_; x++) {
+            level.tiles_[y][x] = Tile{
+                x,
+                y,
                 static_cast<TileType>(GetRandomValue(TILE_TYPE_GRASS, TILE_TYPE_STONE))
             };
-           
         }
     }
 }
 
 void LevelGenerator::generateDungeon(Level& level) {
-    for (int i = 0; i < level.width_; i++) {
-        for (int j = 0; j < level.height_; j++) {
-            level.tiles_[i][j] = Tile{
-                i,
-                j,
+    for (int y = 0; y < level.height_; y++) {
+        for (int x = 0; x < level.width_; x++) {
+            level.tiles_[y][x] = Tile{
+                x,
+                y,
                 static_cast<TileType>(GetRandomValue(TILE_TYPE_DIRT, TILE_TYPE_STONE))
             };
         }

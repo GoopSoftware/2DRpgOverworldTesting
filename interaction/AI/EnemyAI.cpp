@@ -5,10 +5,20 @@ void EnemyAI::idle(Enemy* enemy, float deltaTime) {
 	// Add steps
 	enemy->waitTime_ += deltaTime;
 
-	if (enemy->waitTime_ >= enemy->idleTime_) {
+	if (enemy->isPlayerClose_) {
+		if (enemy->idleTime_ > chaseSpeed) {
+			enemy->idleTime_ = chaseSpeed;
+		}
+		if (enemy->waitTime_ >= enemy->idleTime_) {
+			enemy->waitTime_ = 0;
+			enemy->state_ = STATE_RUN;
+		}
+	}
+	else if (enemy->waitTime_ >= enemy->idleTime_) {
 		enemy->waitTime_ = 0;
 		enemy->state_ = STATE_WALK;
 	}
+	
 }
 
 
@@ -20,40 +30,64 @@ void EnemyAI::walk(Enemy* enemy, int maxX, int maxY) {
 
 	if (direction == 0) {
 		// Left
-		std::cout << "Left\n";
-		nextI -= 8;
+		nextI -= TILE_SIZE;
 	}
 	else if (direction == 1) {
 		// Right
-		std::cout << "Right\n";
-		nextI += 8;
+		nextI += TILE_SIZE;
 	}
 	else if (direction == 2) {
 		// Up
-		std::cout << "Up\n";
-		nextJ -= 8;
+		nextJ -= TILE_SIZE;
 	}
 	else if (direction == 3) {
 		// Down
-		std::cout << "Down\n";
-		nextJ += 8;
-	}
+		nextJ += TILE_SIZE;
+	} 
 
-	if (nextI >= 0 && nextI <= (maxX * TILE_SIZE) - TILE_SIZE && nextJ >= 0 && nextJ <= (maxY * TILE_SIZE) - TILE_SIZE) {
-		enemy->i_ = nextI;
-		enemy->j_ = nextJ;
-	}
+	clampAndMove(enemy, nextI, nextJ, maxX, maxY);
 
-	
 	// waitTime_ should already be 0 this is backup
 	enemy->waitTime_ = 0;
-	enemy->idleTime_ = GetRandomValue(2, 10);
+	enemy->idleTime_ = GetRandomValue(1, 4);
 	enemy->state_ = STATE_IDLE;
 }
 
-void EnemyAI::run(Enemy* enemy) {
+void EnemyAI::run(Enemy* enemy, Vector2 playerPosition, int playerDistanceX, int playerDistanceY, int maxX, int maxY) {
 	// move x2 speed to direction
 	// direction = player
+	
+	int nextI = enemy->i_;
+	int nextJ = enemy->j_;
+	
+	if (playerPosition.x < enemy->i_ && playerDistanceX > TILE_SIZE) {
+		// Left
+		nextI -= TILE_SIZE;
+		enemy->waitTime_ = 0;
+		enemy->idleTime_ = chaseSpeed;
+	}
+	else if (playerPosition.x > enemy->i_ && playerDistanceX > TILE_SIZE) {
+		// Right
+		nextI += TILE_SIZE;
+		enemy->waitTime_ = 0;
+		enemy->idleTime_ = chaseSpeed;
+	}
+	else if (playerPosition.y > enemy->j_ && playerDistanceY > TILE_SIZE) {
+		// Down
+		nextJ += TILE_SIZE;
+		enemy->waitTime_ = 0;
+		enemy->idleTime_ = chaseSpeed;
+	}
+	else if (playerPosition.y < enemy->j_ && playerDistanceY > TILE_SIZE) {
+		// Up
+		nextJ -= TILE_SIZE;
+		enemy->waitTime_ = 0;
+		enemy->idleTime_ = chaseSpeed;
+	}
+
+	clampAndMove(enemy, nextI, nextJ, maxX, maxY);
+	enemy->state_ = STATE_IDLE;
+	
 }
 
 void EnemyAI::attack(Enemy* enemy) {
@@ -72,4 +106,12 @@ void EnemyAI::die(Enemy* enemy, float deltaTime) {
 
 void EnemyAI::wait(Enemy* enemy, float deltaTime) {
 	// for waiting not in idle state to prevent over switching states
+}
+
+void EnemyAI::clampAndMove(Enemy* enemy, int nextI, int nextJ, int maxX, int maxY) {
+	// Prevents enemies from leaving the bounds of the generated map
+	if (nextI >= 0 && nextI <= (maxX * TILE_SIZE) - TILE_SIZE && nextJ >= 0 && nextJ <= (maxY * TILE_SIZE) - TILE_SIZE) {
+		enemy->i_ = nextI;
+		enemy->j_ = nextJ;
+	}
 }

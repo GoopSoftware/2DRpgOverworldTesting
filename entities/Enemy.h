@@ -44,6 +44,8 @@ public:
 	bool readyForRemoval_ = false;
 	float waitTime_ = 0;
 	float idleTime_ = 0;
+	bool isPlayerClose_ = false;
+
 
 private:
 

@@ -7,7 +7,7 @@ public:
 
 	void idle(Enemy* enemy, float deltaTime);
 	void walk(Enemy* enemy, int maxX, int maxY);
-	void run(Enemy* enemy);
+	void run(Enemy* enemy, Vector2 playerPosition, int playerDistanceX, int playerDistanceY, int maxX, int maxY);
 	void attack(Enemy* enemy);
 	void die(Enemy* enemy, float deltaTime);
 
@@ -15,5 +15,7 @@ public:
 private:
 
 
+	void clampAndMove(Enemy* enemy, int nextI, int nextJ, int maxX, int maxY);
+	float chaseSpeed = .4f;
 };
 

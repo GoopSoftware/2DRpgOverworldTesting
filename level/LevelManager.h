@@ -10,6 +10,7 @@
 #include "../entities/Orc.h"
 #include "../spawning/Spawner.h"
 #include "../interaction/AI/EnemyStateMachine.h"
+#include "../entities/Player.h"
 
 
 class LevelManager {
@@ -90,7 +91,7 @@ public:
 	std::vector<Entity*> worldEntities_;
 	std::vector<Entity*> dungeonEntities_;
 
-	void updateEnemyStateMachines();
+	void updateEnemyStateMachines(Player* player);
 	void updateDeltaTime(float deltaTime_);
 
 	DungeonDoor* dungeonGate;

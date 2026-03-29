@@ -3,6 +3,7 @@
 #include "vector"
 #include "../../entities/Enemy.h"
 #include "../../commands/Command.h"
+#include "../../entities/Player.h"
 #include "EnemyAI.h"
 
 class EnemyStateMachine {
@@ -16,7 +17,12 @@ public:
 
 	}
 
-	void update(float deltaTime);
+	/*~EnemyStateMachine() {
+		delete enemyAI_;
+		enemyAI_ = nullptr;
+	}*/
+
+	void update(float deltaTime, Player* player);
 	void handleInput(Command* playerInput);
 
 private:

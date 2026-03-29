@@ -72,7 +72,7 @@ void Game::gameUpdate() {
 	}
 
 	levelManager->updateDeltaTime(deltaTime);
-	levelManager->updateEnemyStateMachines();
+	levelManager->updateEnemyStateMachines(player);
 
 	targetSystem->update(player, levelManager);
 	interactTarget = targetSystem->getCurrentTarget();

@@ -4,9 +4,9 @@ void LevelRenderer::renderLevel(const Level& level) {
     int texture_index_x = 0;
     int texture_index_y = 0;
 
-    for (int i = 0; i < level.width_; i++) {
-        for (int j = 0; j < level.height_; j++) {
-            const Tile& tile = level.tiles_[i][j];
+    for (int y = 0; y < level.height_; y++) {
+        for (int x = 0; x < level.width_; x++) {
+            const Tile& tile = level.tiles_[y][x];
 
             switch (tile.type) {
             case TILE_TYPE_DIRT:

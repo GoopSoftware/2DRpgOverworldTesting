@@ -24,16 +24,15 @@ struct worldDimensions{
 class Level {
 public:
 
-	Level(int width, int height) : 
-		width_(width), 
+	Level(int width, int height)
+		: width_(width),
 		height_(height),
 		tiles_(height, std::vector<Tile>(width))
 	{
-		
 	}
 
-	int width_ = 20; // 20 * tileWidth
-	int height_ = 20; // 20 * tileHeight
+	int width_ = 0; // 20 * tileWidth
+	int height_ = 0; // 20 * tileHeight
 	std::vector<std::vector<Tile>> tiles_;
 
 private:
