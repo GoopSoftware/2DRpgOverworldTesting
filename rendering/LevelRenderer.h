@@ -11,8 +11,8 @@ public:
 	{}
 	void renderLevel(const Level& level);
 
-private:
 	Texture2D* textures_;
+private:
 
 
 	void drawTile(int posX, int posY, int texture_index_x, int texture_index_y);

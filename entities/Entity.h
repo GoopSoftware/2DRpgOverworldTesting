@@ -50,8 +50,6 @@ public:
 	int health_ = 100;
 	int attackPower_ = 10;
 	int defense_ = 10;
-
-
 	int damage_ = 10;
 
 private:

@@ -6,6 +6,7 @@ enum State {
 	STATE_IDLE,
 	STATE_WALK,
 	STATE_RUN,
+	STATE_CHARGE_ATTACK,
 	STATE_ATTACK,
 	STATE_DEAD
 };
@@ -44,9 +45,13 @@ public:
 	bool readyForRemoval_ = false;
 	float waitTime_ = 0;
 	float idleTime_ = 0;
+	float attackDuration = 0;
 	bool isPlayerClose_ = false;
+	bool isChargingAttack_ = false;
 
-
+	Vector2 attackTilePosition = { 0.f, 0.f };
+	bool attackTileFound = false;
+	float chargeDuration = -1.f;
 private:
 
 

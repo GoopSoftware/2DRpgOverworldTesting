@@ -51,6 +51,7 @@ public:
 	void spawnFloatingText(const std::string& text, float x, float y);
 	void updateFloatingText(float deltaTime);
 	void renderFloatingText();
+	void handleEnemyCombatResult(CombatResult result);
 
 	float deltaTime = 0;
 

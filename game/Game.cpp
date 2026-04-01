@@ -73,6 +73,9 @@ void Game::gameUpdate() {
 
 	levelManager->updateDeltaTime(deltaTime);
 	levelManager->updateEnemyStateMachines(player);
+	for (CombatResult& result : levelManager->enemyCombatResults_) {
+		handleEnemyCombatResult(result);
+	}
 
 	targetSystem->update(player, levelManager);
 	interactTarget = targetSystem->getCurrentTarget();
@@ -154,17 +157,25 @@ void Game::gameRender() {
 	if (levelRenderer != nullptr && currentLevel != nullptr) {
 		levelRenderer->renderLevel(*currentLevel);
 	}
-	
-	//if (levelManager->dungeonGate != nullptr && (player->zone_ == ZONE_WORLD || player->zone_ == ZONE_DUNGEON)) {
-	//	drawTile(levelManager->dungeonGate->i_, levelManager->dungeonGate->j_, 8, 9, WHITE);
-	//}
+
+	for (Vector2 tile : levelManager->enemyAttackTiles) {
+		Rectangle source = { static_cast<float>(1 * TILE_SIZE),
+							 static_cast<float>(1 * TILE_SIZE),
+							 static_cast<float>(TILE_SIZE),
+							 static_cast<float>(TILE_SIZE) };
+		
+		Rectangle dest = { static_cast<float>(tile.x),
+						   static_cast<float>(tile.y),
+						   static_cast<float>(TILE_SIZE),
+						   static_cast<float>(TILE_SIZE) };
+		
+		Vector2 origin = { 0, 0 };
+		DrawRectangle(static_cast<int>(tile.x), static_cast<int>(tile.y), TILE_SIZE, TILE_SIZE, ORANGE);
+	}
 
 	// enemy rendering
 	renderLevelEnemies(levelManager->worldEnemies_);
 	renderLevelEnemies(levelManager->dungeonEnemies_);
-
-
-	renderFloatingText();
 
 	if (player->zone_ == ZONE_OVERWORLD) {
 		DrawTextureEx(overWorld, Vector2(0.f, 0.f), 0.f, 1.f, WHITE);
@@ -173,6 +184,8 @@ void Game::gameRender() {
 	else {
 		renderActor(playerTexture, static_cast<float>(player->i_), static_cast<float>(player->j_), 6, WHITE);
 	}
+
+	renderFloatingText();
 
 	// highlight current target
 	if (interactTarget != nullptr && interactTarget->isAlive_) {
@@ -282,8 +295,17 @@ void Game::handleCombatCommandResult(Command* command) {
 				);
 		}
 	}
+}
 
-
+void Game::handleEnemyCombatResult(CombatResult result) {
+	if (result.successfulHit && result.target) {
+		PlaySound(hitSound);
+		spawnFloatingText(
+			std::to_string(result.damage),
+			static_cast<float>(result.target->i_),
+			static_cast<float>(result.target->j_)
+		);
+	}
 }
 
 void Game::renderDebugWindow() {

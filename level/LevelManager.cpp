@@ -51,7 +51,7 @@ void LevelManager::spawnEnemiesForZone( std::vector<Enemy*>& enemyContainer, Zon
 	// TODO Expand this to take any enemy type for now its hardcoded orc
 	
 	// Generate monster spawn locations
-	std::vector<SpawnPoint> spawnPositions = levelGenerator_.generateMonsterSpawns(1, zone, level);
+	std::vector<SpawnPoint> spawnPositions = levelGenerator_.generateMonsterSpawns(enemyCount_, zone, level);
 
 	// prototype
 	Orc* orcPrototype = new Orc(0, 0, ZONE_ALL, 50, 10, 10, 0);
@@ -113,12 +113,13 @@ void LevelManager::spawnDungeonDoor() {
 void LevelManager::updateEnemyStateMachines(Player* player) {
 
 	if (currentLevel_ == worldLevel_ && worldESM_) {
-		worldESM_->update(deltaTime_, player);
+		worldESM_->update(deltaTime_, player, enemyAttackTiles, enemyCombatResults_);
+	
 		removeDeadEnemies(worldEnemies_);
 	}
 
 	if (currentLevel_ == dungeonLevel_ && dungeonESM_) {
-		dungeonESM_->update(deltaTime_, player);
+		dungeonESM_->update(deltaTime_, player, enemyAttackTiles, enemyCombatResults_);
 		removeDeadEnemies(dungeonEnemies_);
 	}
 }

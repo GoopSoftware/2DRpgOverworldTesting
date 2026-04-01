@@ -22,11 +22,12 @@ public:
 		enemyAI_ = nullptr;
 	}*/
 
-	void update(float deltaTime, Player* player);
+	void update(float deltaTime, Player* player, std::vector<Vector2>& enemyAttackTiles, std::vector<CombatResult>& combatResults);
 	void handleInput(Command* playerInput);
 
 private:
 	std::vector<Enemy*>& enemies_;
+
 	EnemyAI enemyAI_;
 
 	int mapWidth_;

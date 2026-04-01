@@ -16,6 +16,7 @@ int main() {
 
 	while (!WindowShouldClose()) {
 		
+	
 		game.gameUpdate();
 
 		BeginDrawing();

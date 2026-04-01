@@ -8,7 +8,7 @@ class CombatCommand : public Command
 {
 public:
 
-	CombatCommand(Entity* attacker, Entity* target) : \
+	CombatCommand(Entity* attacker, Entity* target) : 
 		attacker_(attacker),
 		target_(target)
 	{}

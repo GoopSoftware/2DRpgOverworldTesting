@@ -91,11 +91,15 @@ public:
 	std::vector<Entity*> worldEntities_;
 	std::vector<Entity*> dungeonEntities_;
 
+	std::vector<Vector2> enemyAttackTiles;
+
 	void updateEnemyStateMachines(Player* player);
 	void updateDeltaTime(float deltaTime_);
+	std::vector<CombatResult> enemyCombatResults_;
 
-	DungeonDoor* dungeonGate;
-
+	DungeonDoor* dungeonGate = nullptr;
+	
+	int enemyCount_ = 10;
 
 private:
 
